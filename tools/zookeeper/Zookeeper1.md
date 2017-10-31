@@ -1,5 +1,7 @@
 # zookeeper 综述
 
+转载来源 [并发编程网 – ifeve.com](http://ifeve.com/)
+
 ## zookeeper 一个分布式应用的分布式协调服务
 
 zookeeper 是一个分布式的，开源的协调服务框架，服务于分布式应用程序。
@@ -179,3 +181,5 @@ zookeeper 已经在许多企业级应用中获得成功,雅虎内部使用zookee
 zookeeper在雅虎内部还用于数据抓取服务,即网络爬虫,同时致力于失败恢复.
 
 许多雅虎的广告系统使用zookeeper 实现高可靠服务.
+
+
