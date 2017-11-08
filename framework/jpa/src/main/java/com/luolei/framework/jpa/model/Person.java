@@ -21,7 +21,7 @@ public class Person extends BaseEntity {
 
     private String name;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "detail_id", foreignKey = @ForeignKey(name = "FK_PERSON_DETAIL"))
     private PersonDetail detail;
 }
