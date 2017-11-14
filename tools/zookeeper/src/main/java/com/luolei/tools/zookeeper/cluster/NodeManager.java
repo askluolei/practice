@@ -1,6 +1,8 @@
 package com.luolei.tools.zookeeper.cluster;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -9,6 +11,7 @@ import org.apache.curator.framework.recipes.atomic.DistributedAtomicInteger;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
+import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreV2;
 import org.apache.curator.framework.state.ConnectionStateListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.retry.RetryNTimes;
@@ -18,10 +21,8 @@ import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -39,7 +40,9 @@ public class NodeManager {
     private static final String SEPARATOR = "-";
     private static final String NAMESPACE = "ebservice";
     private static final String ID_NODE = "/node";
-    private static final String LOCK_NODE = "/lock";
+    private static final String LOCK_NODE = "/node_lock";
+
+    private static final String SEMAPHORE_NODE = "/semaphore";
 
     private static final Logger LOG = LoggerFactory.getLogger(NodeManager.class);
 
@@ -81,6 +84,17 @@ public class NodeManager {
     }
 
     /**
+     * 获取可用节点号
+     */
+    public Set<String> getAvaliableNode() {
+        if (Objects.nonNull(treeCache)) {
+            Map<String, ChildData> children = treeCache.getCurrentChildren(ID_NODE);
+            return children.keySet();
+        }
+        return Sets.newHashSet();
+    }
+
+    /**
      * zookeeper 的连接信息
      */
     private final String connectString;
@@ -108,6 +122,22 @@ public class NodeManager {
         this.connectString = connectString;
         this.isTestSessionTimeout = isTestSessionTimeout;
         this.isTestShutdown = isTestShutdown;
+    }
+
+    private ConcurrentMap<String, InterProcessSemaphoreV2> semaphoreCache = Maps.newConcurrentMap();
+
+    /**
+     * 获取分布式信号量
+     * @param bankLoginId
+     * @param maxSize 信号量的size
+     * @return
+     */
+    public InterProcessSemaphoreV2 getSemaphore(String bankLoginId, int maxSize) {
+        if (!Strings.isNullOrEmpty(bankLoginId)) {
+            InterProcessSemaphoreV2 v2 = new InterProcessSemaphoreV2(client, SEMAPHORE_NODE + "/" + bankLoginId, maxSize);
+            semaphoreCache.putIfAbsent(bankLoginId, v2);
+        }
+        return semaphoreCache.get(bankLoginId);
     }
 
     /**
@@ -161,6 +191,7 @@ public class NodeManager {
         distributedAtomicInteger = new DistributedAtomicInteger(client, ID_NODE, new RetryNTimes(10, 10));
         //使用 treeCache 来监听节点数
         treeCache = new TreeCache(client, ID_NODE);
+
         try {
             treeCache.start();
         } catch (Exception e) {

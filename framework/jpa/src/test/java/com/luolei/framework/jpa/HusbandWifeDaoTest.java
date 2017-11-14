@@ -32,24 +32,21 @@ public class HusbandWifeDaoTest {
     @Test
     public void testHusband() {
         Husband husband = new Husband();
-        husband.setName("husband");
+        husband.setName("luolei");
 
         Wife wife = new Wife();
-        wife.setName("wife");
-
+        wife.setName("haha");
         husband.setWife(wife);
 
-        husband = husbandDao.save(husband);
-
+        husbandDao.save(husband);
         assertThat(husbandDao.count()).isEqualTo(1L);
         assertThat(wifeDao.count()).isEqualTo(1L);
-        Husband tempHusband = husbandDao.findAll().get(0);
-        System.out.println(tempHusband.getWife());
-        assertThat(tempHusband.getWife()).isNotNull();
-        Wife tempWife = wifeDao.findAll().get(0);
-        System.out.println("========================");
-        System.out.println(tempWife.getHusband());
-        assertThat(tempWife.getHusband()).isNotNull();
+        assertThat(husbandDao.findAll().get(0).getWife()).isNotNull();
+
+        /**
+         * 这里有bug，在 eclipse 上面单元测试可以通过，idea 这里就过不了
+         */
+        assertThat(wifeDao.findAll().get(0).getHusband()).isNotNull();
     }
 
     @Test

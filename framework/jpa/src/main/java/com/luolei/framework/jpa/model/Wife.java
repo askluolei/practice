@@ -4,10 +4,7 @@ import com.luolei.framework.jpa.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author 罗雷
@@ -20,8 +17,17 @@ import javax.persistence.Table;
 @Setter
 public class Wife extends BaseEntity {
 
+    private static final long serialVersionUID = 1L;
+
+    @Column
     private String name;
 
-    @OneToOne(mappedBy = "wife", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(mappedBy = "wife", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Husband husband;
+
+    public void setHusband(Husband husband) {
+        husband.setWife(this);
+        this.husband = husband;
+    }
+
 }

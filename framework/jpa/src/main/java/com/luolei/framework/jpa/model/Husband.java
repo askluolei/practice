@@ -17,10 +17,12 @@ import javax.persistence.*;
 @Setter
 public class Husband extends BaseEntity {
 
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "t_name")
     private String name;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "wife_id", foreignKey = @ForeignKey(name = "FK_HUS_WIFE"))
     private Wife wife;
 }

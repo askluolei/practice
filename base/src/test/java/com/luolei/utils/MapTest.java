@@ -1,5 +1,6 @@
 package com.luolei.utils;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -32,12 +33,22 @@ public class MapTest {
         map.put(null, "");
     }
 
-    @Getter
-    @Setter
-    @RequiredArgsConstructor
     static class User {
         private final String username;
         private final String password;
+
+        public User(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
     }
 
     @Test
