@@ -6,6 +6,8 @@ import lombok.Setter;
 /**
  * 跟 Index 一样 ，不过这里是唯一索引
  *
+ * 唯一索引如果建立？
+ *
  * @author 罗雷
  * @date 2017/11/14 0014
  * @time 20:01
