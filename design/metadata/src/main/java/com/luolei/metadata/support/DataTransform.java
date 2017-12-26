@@ -1,5 +1,6 @@
 package com.luolei.metadata.support;
 
+import com.luolei.metadata.repository.MetaDataRepository;
 import com.luolei.metadata.repository.MetaObjectRepository;
 import com.luolei.metadata.tables.MetaData;
 import com.luolei.metadata.tables.MetaField;
@@ -26,8 +27,11 @@ public class DataTransform {
 
     private final MetaObjectRepository objectRepository;
 
-    public DataTransform(MetaObjectRepository objectRepository) {
+    private final MetaDataRepository dataRepository;
+
+    public DataTransform(MetaObjectRepository objectRepository, MetaDataRepository dataRepository) {
         this.objectRepository = objectRepository;
+        this.dataRepository = dataRepository;
     }
 
     /**
@@ -41,7 +45,16 @@ public class DataTransform {
         MetaObject metaObject = objectRepository.findOne(objectId);
         MetaData metaData = null;
         if (Objects.nonNull(metaObject)) {
-            metaData = new MetaData();
+            /**
+             * 处理 MetaData 自己特有的字段
+             */
+            final String GUID_KEY = "guid";
+            if (map.containsKey(GUID_KEY)) {
+                metaData = dataRepository.findOne(Long.parseLong(map.get(GUID_KEY)));
+            }
+            if (Objects.isNull(metaData)) {
+                metaData = new MetaData();
+            }
             metaData.setTenant(metaObject.getTenant());
             metaData.setObject(metaObject);
             Set<MetaField> fields = metaObject.getFields();
@@ -66,14 +79,6 @@ public class DataTransform {
                     int fieldNum = field.getFieldNum();
                     metaData.setValue(fieldNum, valueStr);
                 }
-            }
-
-            /**
-             * 处理 MetaData 自己特有的字段
-             */
-            final String GUID_KEY = "guid";
-            if (map.containsKey(GUID_KEY)) {
-                metaData.setGuid(Long.parseLong(map.get(GUID_KEY)));
             }
         }
         return metaData;

@@ -143,6 +143,8 @@ public class MetaDataAccessTest {
         /**
          * 插入数据表
          */
+        log.info("to insert - - ");
+        log.info("value0:{}, value1:{},value2:{}", data.getValue0(), data.getValue1(), data.getValue2());
         data = dataRepository.save(data);
         log.info("value0:{}, value1:{},value2:{}", data.getValue0(), data.getValue1(), data.getValue2());
         assertThat(dataRepository.count()).isEqualTo(1L);
@@ -161,6 +163,8 @@ public class MetaDataAccessTest {
         toUpdate.put("userId", data.getValue0());
         toUpdate.put("lastName", "hello");
         MetaData toUpdateData = dataTransform.transform(toUpdate, metaObject.getObjId());
+        log.info("to update - - ");
+        log.info("value0:{}, value1:{},value2:{}", toUpdateData.getValue0(), toUpdateData.getValue1(), toUpdateData.getValue2());
         toUpdateData = dataRepository.save(toUpdateData);
         log.info("value0:{}, value1:{},value2:{}", toUpdateData.getValue0(), toUpdateData.getValue1(), toUpdateData.getValue2());
         assertThat(dataRepository.count()).isEqualTo(1L);
@@ -183,6 +187,7 @@ public class MetaDataAccessTest {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 Predicate predicate = cb.equal(root.get(key), value);
+                predicates.add(predicate);
             }
             return cb.and(predicates.toArray(new Predicate[predicates.size()]));
         };

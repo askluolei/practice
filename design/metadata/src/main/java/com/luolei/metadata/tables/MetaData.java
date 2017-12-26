@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
 
 import javax.persistence.*;
 
@@ -24,9 +25,11 @@ import javax.persistence.*;
 @Table(name = "t_meta_data")
 /**
  * 这里的字段太多，而且大多是空字段，因此需要动态插入,动态更新（不管为null的字段）
+ * 动态更新的意思是，只更新改变的字段值，
+ * 注意，不是更新非null字段
  */
 @DynamicInsert
-@DynamicUpdate//这里有问题 FIXME
+@DynamicUpdate
 public class MetaData {
 
     /**
