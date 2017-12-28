@@ -58,9 +58,6 @@ public class MetaDataAccessTest {
 
     private MetaTenant tenant;
 
-    private MetaObject metaObject;
-
-
     @Before
     public void init() {
         /**
@@ -69,19 +66,19 @@ public class MetaDataAccessTest {
         tenant = new MetaTenant();
         tenant.setName("测试客户1");
         tenant = tenantRepository.save(tenant);
+    }
 
+    @Test
+    public void testSingleTable() {
         /**
          * 添加一个租户表
          */
-        metaObject = new MetaObject();
+        MetaObject metaObject = new MetaObject();
         metaObject.setTenant(tenant);
         metaObject.setObjectName("user");
         metaObject.setObjectNaturalName("用户表");
         metaObject = objectRepository.save(metaObject);
-    }
 
-    @Test
-    public void test() {
         List<MetaField> fields = new ArrayList<>();
 
         /**
@@ -157,6 +154,9 @@ public class MetaDataAccessTest {
 
         /**
          * 这里更新数据
+         * 更新和插入数据没有什么问题
+         * 主要是各个字段的校验，
+         * 以及嵌套对象的处理问题
          */
         Map<String, String> toUpdate = new HashMap<>();
         toUpdate.put("guid", data.getGuid().toString());
@@ -175,6 +175,9 @@ public class MetaDataAccessTest {
          * 还有就是如何应对复杂查询
          *
          * 这里先考虑单表查询
+         *
+         * 单表 单字段查询，多字段 or/and 查询 都没大问题
+         * 需要封装查询的规则
          */
 
         Map<String, String> queryParams = new HashMap<>();

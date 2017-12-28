@@ -15,7 +15,7 @@ public class ApplicationTest {
     @Test
     public void gen501Value() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 100; i++) {
             sb.append("private String value").append(i).append(";\r\n");
         }
         System.out.println(sb.toString());
@@ -25,7 +25,7 @@ public class ApplicationTest {
     public void testGenSetValue() {
         StringBuilder sb = new StringBuilder();
         sb.append("switch(num) { \r\n");
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 100; i++) {
             sb.append("case ").append(i).append(" : ").append("setValue").append(i).append("(value);break;\r\n");
         }
         sb.append("default: throw new IllegalArgumentException(\"invalid index num:\" + num);\r\n");
@@ -37,7 +37,7 @@ public class ApplicationTest {
     public void testGenGetValue() {
         StringBuilder sb = new StringBuilder();
         sb.append("switch(num) { \r\n");
-        for (int i = 0; i <= 500; i++) {
+        for (int i = 0; i <= 100; i++) {
             sb.append("case ").append(i).append(" : ").append("return getValue").append(i).append("();\r\n");
         }
         sb.append("default: throw new IllegalArgumentException(\"invalid index num:\" + num);\r\n");
