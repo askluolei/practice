@@ -16,6 +16,7 @@
         <module>pattern</module>
         <module>design</module>
         <module>tools</module>
+        <module>template</module>
     </modules>
 
     <dependencies>

@@ -1,7 +1,7 @@
 package com.luolei.pattern.simplefactory.ch4;
 
-import com.luolei.design.simplefactory.ch3.Chart;
-import com.luolei.design.simplefactory.ch3.ChartFactory;
+import com.luolei.pattern.simplefactory.ch3.Chart;
+import com.luolei.pattern.simplefactory.ch3.ChartFactory;
 
 /**
  * 方案的改进

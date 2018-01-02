@@ -1,6 +1,6 @@
 package com.luolei.pattern.memento.ch3;
 
-import com.luolei.design.memento.ch2.Chessman;
+import com.luolei.pattern.memento.ch2.Chessman;
 
 /**
  * @author luolei
