@@ -1,0 +1,20 @@
+{
+  "body":{
+
+  },
+  "header":{
+    "accNo":"26542311",
+    "atomicServiceName":"",
+    "bankBizCodes":"",
+    "bankBizNames":"",
+    "bizType":"balance",
+    "clientName":"银企web",
+    "clientVersion":"银企web_V1.0",
+    "currency":"CNY",
+    "operationName":"balance",
+    "requestTime":"20180103105421",
+    "reserved2":"20180103-622",
+    "responseTime":"",
+    "subBizType":"today_balance"
+  }
+}
