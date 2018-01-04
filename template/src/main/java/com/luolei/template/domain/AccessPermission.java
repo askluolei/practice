@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -26,12 +28,17 @@ public class AccessPermission extends AbstractAuditingEntity implements Serializ
     private static final long serialVersionUID = 1L;
 
     @Column(name = "role_name", nullable = false, length = 64)
+    @NotNull
+    @Size(min = 5, max = 16)
     private String roleName;
 
     @Column(name = "protected_resource", nullable = false, length = 64)
+    @NotNull
+    @Size(min = 5, max = 32)
     private String protectedResource;
 
     @Column(name = "hatch_permission", nullable = false)
     @Enumerated(EnumType.STRING)
+    @NotNull
     private HatchPermission hatchPermission;
 }
