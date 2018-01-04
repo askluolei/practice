@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Email;
 
@@ -16,6 +17,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -27,7 +30,6 @@ import java.util.Set;
 @Table(name = "_user")
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"authorities"})
 @ToString(exclude = {"authorities"})
 public class User extends AbstractAuditingEntity implements Serializable {
 
@@ -92,4 +94,26 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
+    // Lowercase the login before saving it in database
+    public void setLogin(String login) {
+        this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        User user = (User) o;
+        return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }

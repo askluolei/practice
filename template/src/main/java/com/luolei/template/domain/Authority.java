@@ -1,6 +1,5 @@
 package com.luolei.template.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,7 +23,6 @@ import java.io.Serializable;
 @Table(name = "_authority")
 @Setter
 @Getter
-@EqualsAndHashCode
 @ToString
 public class Authority implements Serializable  {
 
@@ -35,4 +33,23 @@ public class Authority implements Serializable  {
     @Id
     @Column(length = 50)
     private String name;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Authority authority = (Authority) o;
+
+        return !(name != null ? !name.equals(authority.name) : authority.name != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
 }

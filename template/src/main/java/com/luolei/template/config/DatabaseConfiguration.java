@@ -1,5 +1,6 @@
 package com.luolei.template.config;
 
+import com.luolei.template.domain.Sequence;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.liquibase.AsyncSpringLiquibase;
 
@@ -21,6 +22,7 @@ import javax.sql.DataSource;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * 数据库配置
@@ -96,6 +98,15 @@ public class DatabaseConfiguration {
             log.debug("Configuring Liquibase");
         }
         return liquibase;
+    }
+
+    @Bean
+    public Sequence sequence(ApplicationProperties applicationProperties) {
+        ApplicationProperties.Sequence propertiesSequence = applicationProperties.getSequence();
+        long workerId = propertiesSequence.getWorkerId();
+        long datacenterId = propertiesSequence.getDatacenterId();
+        log.debug("sequence workerId:{}, datacenterId:{}", workerId, datacenterId);
+        return new Sequence(workerId, datacenterId);
     }
 }
 

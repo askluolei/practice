@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * 异步的实体审计写入
@@ -65,15 +66,11 @@ public class AsyncEntityAuditEventWriter {
         String entityData;
         log.trace("Getting Entity Id and Content");
         try {
-            Field privateLongField = entityClass.getDeclaredField("id");
-            privateLongField.setAccessible(true);
-            entityId = (Long) privateLongField.get(entity);
-            privateLongField.setAccessible(false);
+            AbstractAuditingEntity abstractAuditingEntity = (AbstractAuditingEntity) entity;
+            entityId = abstractAuditingEntity.getId();
             entityData = objectMapper.writeValueAsString(entity);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException |
-                IOException e) {
+        } catch (IOException e) {
             log.error("Exception while getting entity ID and content {}", e);
-            // returning null as we dont want to raise an application exception here
             return null;
         }
         auditedEntity.setEntityId(entityId);

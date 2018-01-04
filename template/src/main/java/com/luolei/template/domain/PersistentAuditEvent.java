@@ -31,6 +31,7 @@ public class PersistentAuditEvent implements Serializable {
     @Id
     @GeneratedValue(generator = "gid")
     @GenericGenerator(name = "gid", strategy = "com.luolei.template.domain.IDGenerator")
+    @Column(name = "event_id")
     private Long id;
 
     @NotNull

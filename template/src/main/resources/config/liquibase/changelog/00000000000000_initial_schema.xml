@@ -16,7 +16,7 @@
     -->
     <changeSet id="00000000000001" author="jhipster">
         <createTable tableName="_user">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="login" type="varchar(100)">
@@ -103,7 +103,7 @@
                   separator=";"
                   tableName="_user_authority"/>
         <createTable tableName="_persistent_audit_event">
-            <column name="event_id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="event_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="principal" type="varchar(100)">
@@ -145,7 +145,7 @@
 
         <!-- Social -->
         <createTable tableName="_social_user_connection">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="user_id" type="varchar(255)">
@@ -169,6 +169,14 @@
             <column name="secret" type="varchar(255)"/>
             <column name="refresh_token" type="varchar(255)"/>
             <column name="expire_time" type="bigint"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
         <addUniqueConstraint tableName="_social_user_connection" columnNames="user_id, provider_id, provider_user_id"/>

@@ -52,6 +52,83 @@ public class LoggingAspect {
     }
 
     /**
+     * 任意public 方法
+     */
+    @Pointcut("execution(public * *(..))")
+    private void anyPublic() {
+    }
+
+    /**
+     * 目标对象上有 @RestController 注解的类
+     */
+    @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
+    private void withinAnnotationRestController() {
+    }
+
+    /**
+     * 目标对象上有 @Controller 注解的类
+     */
+    @Pointcut("@within(org.springframework.stereotype.Controller)")
+    private void withinAnnotationController() {
+    }
+
+    /**
+     * 目标对象上有 @Service 注解的类
+     */
+    @Pointcut("@within(org.springframework.stereotype.Service)")
+    private void withinAnnotationService() {
+    }
+
+    /**
+     * 目标对象上有 @Repository 注解的类
+     */
+    @Pointcut("@within(org.springframework.stereotype.Repository)")
+    private void withinAnnotationRepository() {
+    }
+
+    /**
+     * 目标对象上有 @Component 注解的类
+     */
+    @Pointcut("@within(org.springframework.stereotype.Component)")
+    private void withinAnnotationComponent() {
+    }
+
+    /**
+     * 方法上有 @GetMapping 注解
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
+    private void annotationGetMappingMethod() {
+    }
+
+    /**
+     * 方法上有 @PostMapping 注解
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
+    private void annotationPostMappingMethod() {
+    }
+
+    /**
+     * 方法上有 @PutMapping 注解
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PutMapping)")
+    private void annotationPutMappingMethod() {
+    }
+
+    /**
+     * 方法上有 @DeleteMapping 注解
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
+    private void annotationDeleteMappingMethod() {
+    }
+
+    /**
+     * 方法上有 @PatchMapping 注解
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PatchMapping)")
+    private void annotationPatchMappingMethod() {
+    }
+
+    /**
      * 记录抛出异常的方法
      * 开发模式下加上异常堆栈
      * @param joinPoint join point for advice

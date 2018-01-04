@@ -8,7 +8,6 @@ import io.github.jhipster.config.JHipsterProperties;
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.UndertowOptions;
-import org.apache.commons.io.FilenameUtils;
 import org.h2.server.web.WebServlet;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +49,9 @@ public class WebConfigurerTest {
 
     private MetricRegistry metricRegistry;
 
+    /**
+     * 构造 web 运行环境
+     */
     @Before
     public void setup() {
         servletContext = spy(new MockServletContext());
@@ -66,6 +68,9 @@ public class WebConfigurerTest {
         webConfigurer.setMetricRegistry(metricRegistry);
     }
 
+    /**
+     * 测试启动 正式环境的 应用上下文
+     */
     @Test
     public void testStartUpProdServletContext() throws ServletException {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
@@ -78,6 +83,9 @@ public class WebConfigurerTest {
         verify(servletContext, never()).addServlet(eq("H2Console"), any(WebServlet.class));
     }
 
+    /**
+     * 测试启动 开发环境的 应用上下文
+     */
     @Test
     public void testStartUpDevServletContext() throws ServletException {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT);
@@ -90,6 +98,9 @@ public class WebConfigurerTest {
         verify(servletContext).addServlet(eq("H2Console"), any(WebServlet.class));
     }
 
+    /**
+     * 测试自定义容器的属性是否配置成功
+     */
     @Test
     public void testCustomizeServletContainer() {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
@@ -105,6 +116,9 @@ public class WebConfigurerTest {
         assertThat(serverOptions.getMap().get(UndertowOptions.ENABLE_HTTP2)).isNull();
     }
 
+    /**
+     * 测试 使用 undertow 服务器配置 HTTP2 是否生效
+     */
     @Test
     public void testUndertowHttp2Enabled() {
         props.getHttp().setVersion(JHipsterProperties.Http.Version.V_2_0);
@@ -116,6 +130,9 @@ public class WebConfigurerTest {
         assertThat(serverOptions.getMap().get(UndertowOptions.ENABLE_HTTP2)).isTrue();
     }
 
+    /**
+     * 测试 访问 API 是否支持 cors 跨域
+     */
     @Test
     public void testCorsFilterOnApiPath() throws Exception {
         props.getCors().setAllowedOrigins(Collections.singletonList("*"));
@@ -146,6 +163,9 @@ public class WebConfigurerTest {
             .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "other.domain.com"));
     }
 
+    /**
+     * 测试非 API 的url不支持跨域请求
+     */
     @Test
     public void testCorsFilterOnOtherPath() throws Exception {
         props.getCors().setAllowedOrigins(Collections.singletonList("*"));
@@ -165,6 +185,9 @@ public class WebConfigurerTest {
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
     }
 
+    /**
+     * 测试 API 的url，在配置允许的跨域主机为 null 的时候 不允许跨域请求
+     */
     @Test
     public void testCorsFilterDeactivated() throws Exception {
         props.getCors().setAllowedOrigins(null);
@@ -180,6 +203,9 @@ public class WebConfigurerTest {
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
     }
 
+    /**
+     * 测试 API 的url，在配置允许的跨域主机为 空队列 的时候 不允许跨域请求
+     */
     @Test
     public void testCorsFilterDeactivated2() throws Exception {
         props.getCors().setAllowedOrigins(new ArrayList<>());

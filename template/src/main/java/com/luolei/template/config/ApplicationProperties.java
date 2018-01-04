@@ -1,5 +1,7 @@
 package com.luolei.template.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,5 +10,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @time 11:14
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@Getter
+@Setter
 public class ApplicationProperties {
+
+    private Sequence sequence = new Sequence();
+
+    @Getter
+    @Setter
+    public static class Sequence {
+        private Long workerId = 0L;
+        private Long datacenterId = 0L;
+    }
 }

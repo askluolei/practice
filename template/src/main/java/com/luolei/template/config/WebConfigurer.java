@@ -44,7 +44,6 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
     private MetricRegistry metricRegistry;
 
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
-
         this.env = env;
         this.jHipsterProperties = jHipsterProperties;
     }

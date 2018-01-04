@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 第三方登录用户信息
@@ -89,5 +90,27 @@ public class SocialUserConnection extends AbstractAuditingEntity implements Seri
         this.secret = secret;
         this.refreshToken = refreshToken;
         this.expireTime = expireTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        SocialUserConnection user = (SocialUserConnection) o;
+
+        if (!getId().equals(user.getId())) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

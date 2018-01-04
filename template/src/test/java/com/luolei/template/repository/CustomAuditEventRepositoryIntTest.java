@@ -75,6 +75,9 @@ public class CustomAuditEventRepositoryIntTest {
         testOtherUserEvent.setAuditEventDate(oneHourAgo);
     }
 
+    /**
+     * 测试根据日期 after 查询
+     */
     @Test
     public void testFindAfter() {
         persistenceAuditEventRepository.save(testUserEvent);
@@ -91,6 +94,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(event.getTimestamp()).isEqualTo(Date.from(testUserEvent.getAuditEventDate()));
     }
 
+    /**
+     * 测试根据 用户 和 日期查询
+     */
     @Test
     public void testFindByPrincipal() {
         persistenceAuditEventRepository.save(testUserEvent);
@@ -108,6 +114,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(event.getTimestamp()).isEqualTo(Date.from(testUserEvent.getAuditEventDate()));
     }
 
+    /**
+     * 测试根据用户查询 日期设置为null
+     */
     @Test
     public void testFindByPrincipalNotNullAndAfterIsNull() {
         persistenceAuditEventRepository.save(testUserEvent);
@@ -118,6 +127,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(events.get(0).getPrincipal()).isEqualTo("test-user");
     }
 
+    /**
+     * 用户 和 日期都设置为null 查询
+     */
     @Test
     public void testFindByPrincipalIsNullAndAfterIsNull() {
         persistenceAuditEventRepository.save(testUserEvent);
@@ -129,6 +141,9 @@ public class CustomAuditEventRepositoryIntTest {
             .containsExactlyInAnyOrder("test-user", "other-test-user");
     }
 
+    /**
+     * 根据用户 和 类型 查询
+     */
     @Test
     public void findByPrincipalAndType() {
         persistenceAuditEventRepository.save(testUserEvent);
@@ -154,6 +169,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(event.getTimestamp()).isEqualTo(Date.from(testUserEvent.getAuditEventDate()));
     }
 
+    /**
+     * 添加
+     */
     @Test
     public void addAuditEvent() {
         Map<String, Object> data = new HashMap<>();
@@ -170,6 +188,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(persistentAuditEvent.getAuditEventDate()).isEqualTo(event.getTimestamp().toInstant());
     }
 
+    /**
+     * 添加 大数据量
+     */
     @Test
     public void addAuditEventTruncateLargeData() {
         Map<String, Object> data = new HashMap<>();
@@ -192,6 +213,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(persistentAuditEvent.getAuditEventDate()).isEqualTo(event.getTimestamp().toInstant());
     }
 
+    /**
+     * 添加 附带认证信息
+     */
     @Test
     public void testAddEventWithWebAuthenticationDetails() {
         HttpSession session = new MockHttpSession(null, "test-session-id");
@@ -210,6 +234,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(persistentAuditEvent.getData().get("sessionId")).isEqualTo("test-session-id");
     }
 
+    /**
+     * 添加 附带数据为null
+     */
     @Test
     public void testAddEventWithNullData() {
         Map<String, Object> data = new HashMap<>();
@@ -222,6 +249,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(persistentAuditEvent.getData().get("test-key")).isEqualTo("null");
     }
 
+    /**
+     * 添加 匿名用户(添加不了)
+     */
     @Test
     public void addAuditEventWithAnonymousUser() {
         Map<String, Object> data = new HashMap<>();
@@ -232,6 +262,9 @@ public class CustomAuditEventRepositoryIntTest {
         assertThat(persistentAuditEvents).hasSize(0);
     }
 
+    /**
+     * 添加 认证失败（添加不了）
+     */
     @Test
     public void addAuditEventWithAuthorizationFailureType() {
         Map<String, Object> data = new HashMap<>();
