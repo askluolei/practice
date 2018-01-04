@@ -40,6 +40,12 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/permission.csv"
+                  separator=";"
+                  tableName="_access_permission">
+            <column name="created_date" type="timestamp"/>
+        </loadData>
         <createIndex indexName="access_permission_hatchp"
                      tableName="_access_permission">
             <column name="hatch_permission" type="varchar(64)"/>

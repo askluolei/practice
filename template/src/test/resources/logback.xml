@@ -3,7 +3,7 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger name="com.luolei.template" level="INFO"/>
+    <logger name="com.luolei.template" level="DEBUG"/>
 
     <logger name="io.github.jhipster" level="WARN"/>
 
@@ -24,7 +24,7 @@
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
     <logger name="org.springframework" level="WARN"/>
-    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.web" level="INFO"/>
     <logger name="org.springframework.security" level="WARN"/>
     <logger name="org.springframework.cache" level="WARN"/>
     <logger name="org.thymeleaf" level="WARN"/>

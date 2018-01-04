@@ -1,0 +1,7 @@
+id;role_name;protected_resource;hatch_permission;created_by;last_modified_by
+1;ROLE_USER;TEST;READ;luolei;luolei
+2;ROLE_ADMIN;TEST;READ;luolei;luolei
+3;ROLE_ADMIN;TEST;READALL;luolei;luolei
+4;ROLE_ADMIN;TEST;DELETE;luolei;luolei
+5;ROLE_ADMIN;TEST;CREATE;luolei;luolei
+6;ROLE_ADMIN;TEST;UPDATE;luolei;luolei

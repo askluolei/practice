@@ -1,6 +1,9 @@
 package com.luolei.template.security;
 
+import com.luolei.template.domain.AccessPermission;
+import com.luolei.template.domain.Authority;
 import com.luolei.template.domain.User;
+import com.luolei.template.repository.AccessPermissionRepository;
 import com.luolei.template.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +30,11 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public DomainUserDetailsService(UserRepository userRepository) {
+    private final AccessPermissionRepository accessPermissionRepository;
+
+    public DomainUserDetailsService(UserRepository userRepository, AccessPermissionRepository accessPermissionRepository) {
         this.userRepository = userRepository;
+        this.accessPermissionRepository = accessPermissionRepository;
     }
 
     @Override
@@ -41,9 +47,26 @@ public class DomainUserDetailsService implements UserDetailsService {
             if (!user.isActivated()) {
                 throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
+
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
                     .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                     .collect(Collectors.toList());
+
+            /**
+             * 这里将扩展跟spring-security 结合
+             */
+            List<GrantedAuthority> accessPermissions = new ArrayList<>();
+            for (Authority authority : user.getAuthorities()) {
+                if (authority.getName().startsWith("ROLE_")) {
+                    List<AccessPermission> permissionList = accessPermissionRepository.findByRoleName(authority.getName());
+                    if (!permissionList.isEmpty()) {
+                        permissionList.forEach(accessPermission -> {
+                            accessPermissions.add(new SimpleGrantedAuthority(accessPermission.getProtectedResource() + ":" + accessPermission.getHatchPermission().name()));
+                        });
+                    }
+                }
+            }
+            grantedAuthorities.addAll(accessPermissions);
             return new org.springframework.security.core.userdetails.User(lowercaseLogin,
                     user.getPassword(),
                     grantedAuthorities);
