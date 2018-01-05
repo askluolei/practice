@@ -3,6 +3,7 @@ package com.luolei.template.web.rest.errors;
 import com.luolei.template.web.rest.util.HeaderUtil;
 
 import org.springframework.dao.ConcurrencyFailureException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -52,6 +53,12 @@ public class ExceptionTranslator implements ProblemHandling {
                 .with("violations", ((ConstraintViolationProblem) problem).getViolations())
                 .with("message", ErrorConstants.ERR_VALIDATION);
             return new ResponseEntity<>(builder.build(), entity.getHeaders(), entity.getStatusCode());
+        } else if (problem instanceof BizException) {
+            BizException bizException = (BizException) problem;
+            builder.with("code", bizException.getBizError().getCode())
+                    .with("msg", bizException.getBizError().getMsg())
+                    .with("data", bizException.getData());
+            return new ResponseEntity<>(builder.build(), entity.getHeaders(), HttpStatus.OK);
         } else {
             builder
                 .withCause(((DefaultProblem) problem).getCause())

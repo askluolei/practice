@@ -2,8 +2,11 @@ package com.luolei.template.repository;
 
 import com.luolei.template.domain.AccessPermission;
 import com.luolei.template.security.entitlements.HatchPermission;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 罗雷
@@ -12,9 +15,11 @@ import java.util.List;
  */
 public interface AccessPermissionRepository extends BaseRepository<AccessPermission, Long> {
 
-    List<AccessPermission> findByRoleNameAndProtectedResource(String roleName, String protectedResource);
-
     List<AccessPermission> findByHatchPermissionAndProtectedResource(HatchPermission hatchPermission, String protectedResource);
 
     List<AccessPermission> findByRoleName(String roleName);
+
+    Page<AccessPermission> findByRoleName(String roleName, Pageable pageable);
+
+    Optional<AccessPermission> findByRoleNameAndProtectedResourceAndHatchPermission(String roleName, String protectedResource, HatchPermission hatchPermission);
 }
