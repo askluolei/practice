@@ -4,6 +4,7 @@ import com.luolei.template.domain.AccessPermission;
 import com.luolei.template.repository.AccessPermissionRepository;
 import com.luolei.template.repository.AuthorityRepository;
 import com.luolei.template.security.entitlements.HatchPermission;
+import com.luolei.template.web.rest.errors.BizError;
 import com.luolei.template.web.rest.vm.AccessPermissionVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class AccessPermissionService {
      */
     public AccessPermission createPermission(AccessPermissionVM accessPermissionVM) {
         log.debug("create permission : {}", accessPermissionVM.toString());
+        if (Objects.isNull(authorityRepository.findByName(accessPermissionVM.getRoleName()))) {
+            throw BizError.RESOURCE_NOT_EXIST.exception("role not exist:" + accessPermissionVM.getRoleName());
+        }
         return accessPermissionRepository
                 .findByRoleNameAndProtectedResourceAndHatchPermission(accessPermissionVM.getRoleName(),
                         accessPermissionVM.getProtectedResource(),

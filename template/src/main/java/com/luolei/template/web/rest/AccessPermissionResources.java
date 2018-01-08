@@ -36,18 +36,33 @@ public class AccessPermissionResources {
         this.accessPermissionService = accessPermissionService;
     }
 
+    /**
+     * add access permission
+     * @param accessPermissionVM
+     * @return
+     */
     @PostMapping("/access-permission")
     public ResponseEntity<AccessPermission> createPermission(@RequestBody AccessPermissionVM accessPermissionVM) {
         log.debug("Request to create a permission");
         return ResponseEntity.ok(accessPermissionService.createPermission(accessPermissionVM));
     }
 
+    /**
+     * update a access permission. if not exist, it will create
+     * @param accessPermissionVM
+     * @return
+     */
     @PutMapping("/access-permission")
     public ResponseEntity<AccessPermission> updatePermission(@RequestBody AccessPermissionVM accessPermissionVM) {
         log.debug("Request to update a permission");
         return ResponseEntity.ok(accessPermissionService.updatePermission(accessPermissionVM));
     }
 
+    /**
+     * get all access permission with page
+     * @param pageable
+     * @return
+     */
     @GetMapping("/access-permission")
     public ResponseEntity<List<AccessPermission>> getAllPermission(Pageable pageable) {
         log.debug("Request all permission by page");
@@ -56,12 +71,22 @@ public class AccessPermissionResources {
         return new ResponseEntity<>(page.getContent(), httpHeaders, HttpStatus.OK);
     }
 
+    /**
+     * get access permission by id
+     * @param id
+     * @return
+     */
     @GetMapping("/access-permission/{id}")
     public ResponseEntity<AccessPermission> getPermission(@PathVariable Long id) {
         log.debug("Request to get a permission by id:{}", id);
         return ResponseUtil.wrapOrNotFound(accessPermissionService.getPermission(id));
     }
 
+    /**
+     * delete access permission by id
+     * @param id
+     * @return
+     */
     @DeleteMapping("/access-permission/{id}")
     public ResponseEntity<Void> deletePermission(@PathVariable Long id) {
         log.debug("request to delete a permission by id:{}", id);

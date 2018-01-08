@@ -8,4 +8,6 @@ import com.luolei.template.domain.Authority;
  * @time 17:46
  */
 public interface AuthorityRepository extends BaseRepository<Authority, String> {
+
+    Authority findByName(String name);
 }
