@@ -66,7 +66,7 @@ public class AccessPermissionService {
 
     /**
      * 更新权限
-     * 如果Id 不存在 或者 根据id查询不到那就新增
+     * 如果id 不存在 或者 根据id查询不到那就新增
      * @param accessPermissionVM
      * @return
      */
