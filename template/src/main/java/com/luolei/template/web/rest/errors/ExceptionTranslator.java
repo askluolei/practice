@@ -56,8 +56,8 @@ public class ExceptionTranslator implements ProblemHandling {
         } else if (problem instanceof BizException) {
             BizException bizException = (BizException) problem;
             builder.with("code", bizException.getBizError().getCode())
-                    .with("msg", bizException.getBizError().getMsg())
-                    .with("data", bizException.getData());
+                    .with("codeMsg", bizException.getBizError().getMsg())
+                    .with("message", bizException.getMessage());
             return new ResponseEntity<>(builder.build(), entity.getHeaders(), HttpStatus.OK);
         } else {
             builder

@@ -10,8 +10,8 @@ package com.luolei.template.web.rest.errors;
 public enum BizError {
 
     RESOURCE_EXIST("resource_exist", "资源已经存在"),
-    RESOURCE_NOT_EXIST("resource_not_exist", "资源不存在")
-
+    RESOURCE_NOT_EXIST("resource_not_exist", "资源不存在"),
+    SCHEDULE_ERROR("schedule_error", "调度异常")
     ;
     private String code;
     private String msg;
@@ -27,6 +27,14 @@ public enum BizError {
 
     public BizException exception(String data) {
         return new BizException(this, data);
+    }
+
+    public BizException exception(Throwable throwable) {
+        return new BizException(this, throwable);
+    }
+
+    public BizException exception(Throwable throwable, String data) {
+        return new BizException(this, throwable, data);
     }
 
     public String getCode() {
