@@ -1,0 +1,29 @@
+{
+  "entityAudit": {
+    "home": {
+      "title": "实体类审计",
+      "filter": "过滤",
+      "entityOrTable": "实体类/表",
+      "limitTo": "限制",
+      "load": "获取"
+    },
+    "result": {
+      "searchFieldLabel": "过滤",
+      "tableHeader": {
+        "entityId": "实体主键",
+        "action": "动作",
+        "version": "版本",
+        "value": "当前值",
+        "modifiedDate": "修改时间",
+        "modifiedBy": "修改人",
+        "viewDetail": "查看详情"
+      }
+    },
+    "detail": {
+      "title": "审计详情",
+      "action": "操作被应用在旧的数据",
+      "old": "旧数据",
+      "new": "新数据"
+    }
+  }
+}
