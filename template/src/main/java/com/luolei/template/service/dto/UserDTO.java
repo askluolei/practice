@@ -2,7 +2,7 @@ package com.luolei.template.service.dto;
 
 import com.luolei.template.config.Constants;
 
-import com.luolei.template.domain.Authority;
+import com.luolei.template.domain.Role;
 import com.luolei.template.domain.User;
 
 import org.hibernate.validator.constraints.Email;
@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A DTO representing a user, with his authorities.
+ * A DTO representing a user, with his roleNames.
  */
 public class UserDTO {
 
@@ -51,7 +51,7 @@ public class UserDTO {
 
     private Instant lastModifiedDate;
 
-    private Set<String> authorities;
+    private Set<String> roleNames;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -70,8 +70,8 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities = user.getAuthorities().stream()
-            .map(Authority::getName)
+        this.roleNames = user.getRoles().stream()
+            .map(Role::getName)
             .collect(Collectors.toSet());
     }
 
@@ -171,12 +171,12 @@ public class UserDTO {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Set<String> getAuthorities() {
-        return authorities;
+    public Set<String> getRoleNames() {
+        return roleNames;
     }
 
-    public void setAuthorities(Set<String> authorities) {
-        this.authorities = authorities;
+    public void setRoleNames(Set<String> roleNames) {
+        this.roleNames = roleNames;
     }
 
     @Override
@@ -193,7 +193,7 @@ public class UserDTO {
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
-            ", authorities=" + authorities +
+            ", roleNames=" + roleNames +
             "}";
     }
 }

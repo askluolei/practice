@@ -2,11 +2,11 @@ package com.luolei.template.web.rest;
 
 import com.luolei.template.TemplateApp;
 import com.luolei.template.config.Constants;
-import com.luolei.template.domain.Authority;
+import com.luolei.template.domain.Role;
 import com.luolei.template.domain.User;
-import com.luolei.template.repository.AuthorityRepository;
+import com.luolei.template.repository.RoleRepository;
 import com.luolei.template.repository.UserRepository;
-import com.luolei.template.security.AuthoritiesConstants;
+import com.luolei.template.security.RolesConstants;
 import com.luolei.template.service.MailService;
 import com.luolei.template.service.dto.UserDTO;
 import com.luolei.template.web.rest.errors.ExceptionTranslator;
@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
-import java.time.LocalDate;
 
 import java.util.*;
 
@@ -56,7 +55,7 @@ public class AccountResourceIntTest {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthorityRepository authorityRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private UserService userService;
@@ -120,10 +119,10 @@ public class AccountResourceIntTest {
 
     @Test
     public void testGetExistingAccount() throws Exception {
-        Set<Authority> authorities = new HashSet<>();
-        Authority authority = new Authority();
-        authority.setName(AuthoritiesConstants.ADMIN);
-        authorities.add(authority);
+        Set<Role> authorities = new HashSet<>();
+        Role role = new Role();
+        role.setName(RolesConstants.ADMIN);
+        authorities.add(role);
 
         User user = new User();
         user.setLogin("test");
@@ -132,7 +131,7 @@ public class AccountResourceIntTest {
         user.setEmail("john.doe@jhipster.com");
         user.setImageUrl("http://placehold.it/50x50");
         user.setLangKey("en");
-        user.setAuthorities(authorities);
+        user.setRoles(authorities);
         when(mockUserService.getUserWithAuthorities()).thenReturn(Optional.of(user));
 
         restUserMockMvc.perform(get("/api/account")
@@ -145,7 +144,7 @@ public class AccountResourceIntTest {
             .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
             .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
             .andExpect(jsonPath("$.langKey").value("en"))
-            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
+            .andExpect(jsonPath("$.roleNames").value(RolesConstants.ADMIN));
     }
 
     @Test
@@ -169,7 +168,7 @@ public class AccountResourceIntTest {
         validUser.setActivated(true);
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        validUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         restMvc.perform(
             post("/api/register")
@@ -193,7 +192,7 @@ public class AccountResourceIntTest {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        invalidUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -217,7 +216,7 @@ public class AccountResourceIntTest {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        invalidUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -241,7 +240,7 @@ public class AccountResourceIntTest {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        invalidUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -265,7 +264,7 @@ public class AccountResourceIntTest {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        invalidUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -290,7 +289,7 @@ public class AccountResourceIntTest {
         validUser.setActivated(true);
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        validUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         // Duplicate login, different email
         ManagedUserVM duplicatedUser = new ManagedUserVM();
@@ -306,7 +305,7 @@ public class AccountResourceIntTest {
         duplicatedUser.setCreatedDate(validUser.getCreatedDate());
         duplicatedUser.setLastModifiedBy(validUser.getLastModifiedBy());
         duplicatedUser.setLastModifiedDate(validUser.getLastModifiedDate());
-        duplicatedUser.setAuthorities(new HashSet<>(validUser.getAuthorities()));
+        duplicatedUser.setRoleNames(new HashSet<>(validUser.getRoleNames()));
 
         // Good user
         restMvc.perform(
@@ -339,7 +338,7 @@ public class AccountResourceIntTest {
         validUser.setActivated(true);
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        validUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         // Duplicate email, different login
         ManagedUserVM duplicatedUser = new ManagedUserVM();
@@ -355,7 +354,7 @@ public class AccountResourceIntTest {
         duplicatedUser.setCreatedDate(validUser.getCreatedDate());
         duplicatedUser.setLastModifiedBy(validUser.getLastModifiedBy());
         duplicatedUser.setLastModifiedDate(validUser.getLastModifiedDate());
-        duplicatedUser.setAuthorities(new HashSet<>(validUser.getAuthorities()));
+        duplicatedUser.setRoleNames(new HashSet<>(validUser.getRoleNames()));
 
         // Good user
         restMvc.perform(
@@ -386,7 +385,7 @@ public class AccountResourceIntTest {
         userWithUpperCaseEmail.setCreatedDate(validUser.getCreatedDate());
         userWithUpperCaseEmail.setLastModifiedBy(validUser.getLastModifiedBy());
         userWithUpperCaseEmail.setLastModifiedDate(validUser.getLastModifiedDate());
-        userWithUpperCaseEmail.setAuthorities(new HashSet<>(validUser.getAuthorities()));
+        userWithUpperCaseEmail.setRoleNames(new HashSet<>(validUser.getRoleNames()));
 
         restMvc.perform(
             post("/api/register")
@@ -410,7 +409,7 @@ public class AccountResourceIntTest {
         validUser.setActivated(true);
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(Constants.DEFAULT_LANGUAGE);
-        validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
+        validUser.setRoleNames(Collections.singleton(RolesConstants.USER));
 
         restMvc.perform(
             post("/api/register")
@@ -420,8 +419,8 @@ public class AccountResourceIntTest {
 
         Optional<User> userDup = userRepository.findOneByLogin("badguy");
         assertThat(userDup.isPresent()).isTrue();
-        assertThat(userDup.get().getAuthorities()).hasSize(1)
-            .containsExactly(authorityRepository.findOne(AuthoritiesConstants.USER));
+        assertThat(userDup.get().getRoles()).hasSize(1)
+            .containsExactly(roleRepository.findByName(RolesConstants.USER));
     }
 
     @Test
@@ -471,7 +470,7 @@ public class AccountResourceIntTest {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
+        userDTO.setRoleNames(Collections.singleton(RolesConstants.ADMIN));
 
         restMvc.perform(
             post("/api/account")
@@ -487,7 +486,7 @@ public class AccountResourceIntTest {
         assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
         assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
         assertThat(updatedUser.isActivated()).isEqualTo(true);
-        assertThat(updatedUser.getAuthorities()).isEmpty();
+        assertThat(updatedUser.getRoles()).isEmpty();
     }
 
     @Test
@@ -510,7 +509,7 @@ public class AccountResourceIntTest {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
+        userDTO.setRoleNames(Collections.singleton(RolesConstants.ADMIN));
 
         restMvc.perform(
             post("/api/account")
@@ -549,7 +548,7 @@ public class AccountResourceIntTest {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
+        userDTO.setRoleNames(Collections.singleton(RolesConstants.ADMIN));
 
         restMvc.perform(
             post("/api/account")
@@ -581,7 +580,7 @@ public class AccountResourceIntTest {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
+        userDTO.setRoleNames(Collections.singleton(RolesConstants.ADMIN));
 
         restMvc.perform(
             post("/api/account")

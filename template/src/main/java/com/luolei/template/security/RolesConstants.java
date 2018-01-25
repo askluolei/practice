@@ -5,7 +5,7 @@ package com.luolei.template.security;
  * @date 2018/1/3 0003
  * @time 15:33
  */
-public final class AuthoritiesConstants {
+public final class RolesConstants {
 
     public static final String ADMIN = "ROLE_ADMIN";
 
@@ -13,6 +13,6 @@ public final class AuthoritiesConstants {
 
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
 
-    private AuthoritiesConstants() {
+    private RolesConstants() {
     }
 }

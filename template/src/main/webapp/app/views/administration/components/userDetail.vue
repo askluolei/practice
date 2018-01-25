@@ -48,14 +48,14 @@
         </el-col>
         <el-col :xs="24" :sm="24" :md="12" :lg="12">
           <el-form-item label="角色" label-width="30%">
-            <el-checkbox-group v-model="user.authorities">
-              <el-checkbox disabled v-for="role of user.authorities" :key="role" :label="role"></el-checkbox>
+            <el-checkbox-group v-model="user.roleNames">
+              <el-checkbox disabled v-for="role of user.roleNames" :key="role" :label="role"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
         </el-col>
       </el-form>
     </el-row>
-  </div>  
+  </div>
 </template>
 
 <script>

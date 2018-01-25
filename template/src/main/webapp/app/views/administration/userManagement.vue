@@ -17,9 +17,9 @@
           <el-switch v-model="prop.row.activated" @change="activatedChange(prop.row)"></el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="authorities" label="角色">
+      <el-table-column prop="roleNames" label="角色">
         <template slot-scope="prop">
-          <el-tag size="small" class="role-tag" v-for="role of prop.row.authorities" :key="role">{{role}}</el-tag>
+          <el-tag size="small" class="role-tag" v-for="role of prop.row.roleNames" :key="role">{{role}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createdDate" label="创建时间" sortable>

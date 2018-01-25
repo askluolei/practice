@@ -2,7 +2,7 @@ package com.luolei.template.service;
 
 import com.luolei.template.domain.AccessPermission;
 import com.luolei.template.repository.AccessPermissionRepository;
-import com.luolei.template.repository.AuthorityRepository;
+import com.luolei.template.repository.RoleRepository;
 import com.luolei.template.security.entitlements.HatchPermission;
 import com.luolei.template.web.rest.errors.BizError;
 import com.luolei.template.web.rest.vm.AccessPermissionVM;
@@ -25,11 +25,11 @@ public class AccessPermissionService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final AccessPermissionRepository accessPermissionRepository;
-    private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
 
-    public AccessPermissionService(AccessPermissionRepository accessPermissionRepository, AuthorityRepository authorityRepository) {
+    public AccessPermissionService(AccessPermissionRepository accessPermissionRepository, RoleRepository roleRepository) {
         this.accessPermissionRepository = accessPermissionRepository;
-        this.authorityRepository = authorityRepository;
+        this.roleRepository = roleRepository;
     }
 
     /**
@@ -39,7 +39,7 @@ public class AccessPermissionService {
      */
     public AccessPermission createPermission(AccessPermissionVM accessPermissionVM) {
         log.debug("create permission : {}", accessPermissionVM.toString());
-        if (Objects.isNull(authorityRepository.findByName(accessPermissionVM.getRoleName()))) {
+        if (Objects.isNull(roleRepository.findByName(accessPermissionVM.getRoleName()))) {
             throw BizError.RESOURCE_NOT_EXIST.exception("role not exist:" + accessPermissionVM.getRoleName());
         }
         return accessPermissionRepository

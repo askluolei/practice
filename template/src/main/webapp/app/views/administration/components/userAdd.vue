@@ -37,8 +37,8 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="24" :md="12" :lg="12">
-          <el-form-item prop="authorities" label="角色" label-width="30%">
-            <el-checkbox-group v-model="user.authorities" :min="1">
+          <el-form-item prop="roleNames" label="角色" label-width="30%">
+            <el-checkbox-group v-model="user.roleNames" :min="1">
               <el-checkbox v-for="role of roleList" :key="role" :label="role"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
@@ -86,7 +86,7 @@
           email: '',
           imageUrl: '',
           activated: '',
-          authorities: []
+          roleNames: []
         },
         userRule: {
           login: [
