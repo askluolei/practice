@@ -1,10 +1,13 @@
 package com.luolei.template.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -16,7 +19,7 @@ import java.util.Set;
 @Table(name = "_schedule_task")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "logs")
 public class ScheduleTask extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
@@ -30,12 +33,13 @@ public class ScheduleTask extends AbstractAuditingEntity {
      * spring bean名称
      */
     @Column(name = "bean_name", length = 64, nullable = false)
+    @NotNull
     private String beanName;
 
     /**
      * 方法名
      */
-    @Column(name = "method_name", length = 64, nullable = false)
+    @Column(name = "method_name", length = 64)
     private String methodName;
 
     /**
@@ -48,6 +52,7 @@ public class ScheduleTask extends AbstractAuditingEntity {
      * cron表达式
      */
     @Column(name = "cron_expression", length = 16)
+    @NotNull
     private String cronExpression;
 
     /**
@@ -63,6 +68,11 @@ public class ScheduleTask extends AbstractAuditingEntity {
     @Column(name = "remark")
     private String remark;
 
-    @OneToMany(mappedBy = "task")
+    /**
+     * 任务执行日志
+     */
+    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    @BatchSize(size = 20)
+    @JsonIgnoreProperties("task")
     private Set<ScheduleLog> logs;
 }

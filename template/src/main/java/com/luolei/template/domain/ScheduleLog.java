@@ -1,5 +1,6 @@
 package com.luolei.template.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "_schedule_task_log")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "task")
 public class ScheduleLog extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +44,7 @@ public class ScheduleLog extends AbstractAuditingEntity {
      */
     @ManyToOne
     @JoinColumn(name = "task_id")
+    @JsonIgnoreProperties("logs")
     private ScheduleTask task;
 
 }

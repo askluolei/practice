@@ -46,6 +46,7 @@
         <gatling.version>2.3.0</gatling.version>
         <gatling-maven-plugin.version>2.2.1</gatling-maven-plugin.version>
         <quartz.version>2.3.0</quartz.version>
+        <fastjson.version>1.2.45</fastjson.version>
 
         <!-- Plugin versions -->
         <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
@@ -341,6 +342,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 

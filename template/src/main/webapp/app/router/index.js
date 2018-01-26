@@ -50,7 +50,8 @@ export const asyncRouterMap = [
     component: Layout,
     meta: {
       title: 'administration',
-      icon: 'user-round'
+      icon: 'user-round',
+      role: ['ROLE_ADMIN']
     },
     children: [
       { path: 'user-management', component: _import('administration/userManagement'), name: 'userManagement', meta: { title: 'userManagement', noCache: 'true', icon: 'user' }},

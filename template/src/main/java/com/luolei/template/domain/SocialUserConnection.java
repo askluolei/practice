@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -19,12 +20,15 @@ import java.util.Objects;
  * @date 2018/1/2 0002
  * @time 17:35
  */
-@Entity
-@Table(name = "_social_user_connection")
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
+@Entity
+@Table(name = "_social_user_connection", indexes = {
+    @Index(name = "UK_UID_PID_PUID", columnList = "user_id, provider_id, provider_user_id", unique = true),
+    @Index(name = "UK_UID_PID_RANK", columnList = "user_id, provider_id, rank", unique = true)
+})
 public class SocialUserConnection extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -68,7 +68,7 @@ const user = {
             reject('error')
           }
           const data = response.data
-          commit('SET_ROLES', data.authorities)
+          commit('SET_ROLES', data.roleNames)
           commit('SET_NAME', data.login)
           commit('SET_AVATAR', data.imageUrl)
           commit('SET_INTRODUCTION', data.firstName)

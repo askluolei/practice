@@ -6,6 +6,7 @@ import logs from './logs'
 import metrics from './metrics'
 import route from './route'
 import tracker from './tracker'
+import common from './common'
 
 export default {
   ...audits,
@@ -15,5 +16,6 @@ export default {
   ...logs,
   ...metrics,
   ...route,
-  ...tracker
+  ...tracker,
+  ...common
 }

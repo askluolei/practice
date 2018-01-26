@@ -105,10 +105,11 @@ public class HatchPermissionTest {
      *
      * 自定义方法 isEntitled 有两个参数 第一个是要保护的资源（字符串） 第二个是权限 READ,DELETE 等 根据当前登录用户的角色判断是否有该权限
      * 目前自定义的跟 hasAuthority 融合 可以随便用哪个都行 譬如 资源 TEST 权限 READ  可以使用 hasAuthority('TEST:READ') 或者 isEntitled('TEST', 'READ') 这两个等效
-     * 但是注意 融合的时候使用了 角色默认的 ROLE_ 开头  还有分隔符为 :
+     * 但是注意 融合的时候使用了 角色默认的 ROLE_ 开头  还有分隔符为 : 这两个默认值
      *
      * 为了测试 在权限表里面加了一些数据
      * 看config/permission.csv 里面
+     * import.sql
      */
     @Test
     @WithMockUser

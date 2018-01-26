@@ -3,7 +3,7 @@
     <h2 v-text="$t('logs.title')">Logs</h2>
     <span v-text="$t('logs.filter')">Filter</span>
     <el-input v-model="filter"></el-input>
-    <el-table :data="loggersView" stripe>
+    <el-table :data="loggersView" stripe v-loading="loading" :element-loading-text="$t('common.loading')" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
       <el-table-column prop="name" :label="$t('logs.table.name')"></el-table-column>
       <el-table-column prop="level" :label="$t('logs.table.level')">
         <template slot-scope="prop">
@@ -23,6 +23,7 @@
   export default {
     data() {
       return {
+        loading: false,
         loggers: [],
         filter: ''
       }
@@ -51,10 +52,16 @@
       },
       init() {
         // init
+        this.loading = true
         logs()
           .then(response => {
             const data = response.data
             this.loggers = data
+            this.loading = false
+          })
+          .catch(error => {
+            console.log('error', error)
+            this.loading = false
           })
       }
     },

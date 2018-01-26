@@ -6,7 +6,7 @@
     <el-input v-model="filter"></el-input>
     <label>Spring configuration</label>
 
-    <el-table :data="dataView" stripe>
+    <el-table :data="dataView" stripe v-loading="loading" :element-loading-text="$t('common.loading')" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
       <el-table-column prop="prefix" :label="$t('configuration.table.prefix')"></el-table-column>
       <el-table-column :label="$t('configuration.table.properties')">
         <template slot-scope="prop">
@@ -38,6 +38,7 @@
   export default {
     data() {
       return {
+        loading: false,
         configprops: {},
         env: {},
         data: [],
@@ -61,6 +62,7 @@
     },
     methods: {
       init() {
+        this.loading = true
         configprops()
           .then(response => {
             const properties = []
@@ -74,7 +76,13 @@
             this.data = properties.sort((pA, pB) => {
               return (pA.prefix === pB.prefix) ? 0 : (pA.prefix < pB.prefix) ? -1 : 1
             })
+            this.loading = false
           })
+          .catch(error => {
+            console.log('error', error)
+            this.loading = false
+          })
+        this.loading = true
         env()
           .then(response => {
             const data = response.data
@@ -97,6 +105,11 @@
               }
             }
             this.env = properties
+            this.loading = false
+          })
+          .catch(error => {
+            console.log('error', error)
+            this.loading = false
           })
       }
     },
