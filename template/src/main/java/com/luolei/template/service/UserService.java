@@ -1,11 +1,11 @@
 package com.luolei.template.service;
 
-import com.luolei.template.domain.Authority;
+import com.luolei.template.domain.Role;
 import com.luolei.template.domain.User;
-import com.luolei.template.repository.AuthorityRepository;
+import com.luolei.template.repository.RoleRepository;
 import com.luolei.template.config.Constants;
 import com.luolei.template.repository.UserRepository;
-import com.luolei.template.security.AuthoritiesConstants;
+import com.luolei.template.security.RolesConstants;
 import com.luolei.template.security.SecurityUtils;
 import com.luolei.template.service.util.RandomUtil;
 import com.luolei.template.service.dto.UserDTO;
@@ -39,13 +39,13 @@ public class UserService {
 
     private final SocialService socialService;
 
-    private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SocialService socialService, AuthorityRepository authorityRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SocialService socialService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.socialService = socialService;
-        this.authorityRepository = authorityRepository;
+        this.roleRepository = roleRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -86,8 +86,8 @@ public class UserService {
     public User registerUser(UserDTO userDTO, String password) {
 
         User newUser = new User();
-        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
-        Set<Authority> authorities = new HashSet<>();
+        Role role = roleRepository.findByName(RolesConstants.USER);
+        Set<Role> roles = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(userDTO.getLogin());
         // new user gets initially a generated password
@@ -101,8 +101,8 @@ public class UserService {
         newUser.setActivated(false);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
-        authorities.add(authority);
-        newUser.setAuthorities(authorities);
+        roles.add(role);
+        newUser.setRoles(roles);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -120,11 +120,11 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        if (userDTO.getAuthorities() != null) {
-            Set<Authority> authorities = userDTO.getAuthorities().stream()
-                .map(authorityRepository::findOne)
+        if (userDTO.getRoleNames() != null) {
+            Set<Role> authorities = userDTO.getRoleNames().stream()
+                .map(roleRepository::findByName)
                 .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
+            user.setRoles(authorities);
         }
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
@@ -175,11 +175,12 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
-                Set<Authority> managedAuthorities = user.getAuthorities();
-                managedAuthorities.clear();
-                userDTO.getAuthorities().stream()
-                    .map(authorityRepository::findOne)
-                    .forEach(managedAuthorities::add);
+                Set<Role> managedRoles = user.getRoles();
+                managedRoles.clear();
+                userDTO.getRoleNames().stream()
+                    .map(roleRepository::findByName)
+                    .filter(Objects::nonNull)
+                    .forEach(managedRoles::add);
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
@@ -241,8 +242,8 @@ public class UserService {
     /**
      * @return a list of all the authorities
      */
-    public List<String> getAuthorities() {
-        return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    public List<String> getRoles() {
+        return roleRepository.findAll().stream().map(Role::getName).collect(Collectors.toList());
     }
 
 }

@@ -1,6 +1,6 @@
 package com.luolei.template.service.mapper;
 
-import com.luolei.template.domain.Authority;
+import com.luolei.template.domain.Role;
 import com.luolei.template.domain.User;
 import com.luolei.template.service.dto.UserDTO;
 
@@ -42,9 +42,9 @@ public class UserMapper {
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
-            Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
-            if (authorities != null) {
-                user.setAuthorities(authorities);
+            Set<Role> roles = this.authoritiesFromStrings(userDTO.getRoleNames());
+            if (roles != null) {
+                user.setRoles(roles);
             }
             return user;
         }
@@ -66,9 +66,9 @@ public class UserMapper {
         return user;
     }
 
-    public Set<Authority> authoritiesFromStrings(Set<String> strings) {
+    public Set<Role> authoritiesFromStrings(Set<String> strings) {
         return strings.stream().map(string -> {
-            Authority auth = new Authority();
+            Role auth = new Role();
             auth.setName(string);
             return auth;
         }).collect(Collectors.toSet());

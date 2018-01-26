@@ -1,6 +1,6 @@
 package com.luolei.template.config;
 
-import com.luolei.template.security.AuthoritiesConstants;
+import com.luolei.template.security.RolesConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +88,7 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
                 Principal principal = request.getPrincipal();
                 if (principal == null) {
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
+                    authorities.add(new SimpleGrantedAuthority(RolesConstants.ANONYMOUS));
                     principal = new AnonymousAuthenticationToken("WebsocketConfiguration", "anonymous", authorities);
                 }
                 return principal;

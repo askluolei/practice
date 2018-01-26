@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+   <changeSet author="35328 (generated)" id="1516885766986-1">
+      <createTable tableName="_access_permission">
+         <column name="id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_by" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_date" type="BINARY(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="last_modified_by" type="VARCHAR(50)"/>
+         <column name="last_modified_date" type="BINARY(255)"/>
+         <column name="hatch_permission" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="protected_resource" type="VARCHAR(64)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="role_name" type="VARCHAR(64)">
+            <constraints nullable="false"/>
+         </column>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-2">
+      <createTable tableName="_persistent_audit_event">
+         <column name="event_id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="event_date" type="BINARY(255)"/>
+         <column name="event_type" type="VARCHAR(255)"/>
+         <column name="principal" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-3">
+      <createTable tableName="_persistent_audit_evt_data">
+         <column name="event_id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="value" type="VARCHAR(255)"/>
+         <column name="name" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-4">
+      <createTable tableName="_role">
+         <column name="id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_by" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_date" type="BINARY(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="last_modified_by" type="VARCHAR(50)"/>
+         <column name="last_modified_date" type="BINARY(255)"/>
+         <column name="introduce" type="VARCHAR(128)"/>
+         <column name="name" type="VARCHAR(50)"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-5">
+      <createTable tableName="_schedule_task">
+         <column name="id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_by" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_date" type="BINARY(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="last_modified_by" type="VARCHAR(50)"/>
+         <column name="last_modified_date" type="BINARY(255)"/>
+         <column name="bean_name" type="VARCHAR(64)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="cron_expression" type="VARCHAR(16)"/>
+         <column name="method_name" type="VARCHAR(64)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="params" type="VARCHAR(255)"/>
+         <column name="remark" type="VARCHAR(255)"/>
+         <column name="status" type="VARCHAR(255)"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-6">
+      <createTable tableName="_schedule_task_log">
+         <column name="id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_by" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_date" type="BINARY(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="last_modified_by" type="VARCHAR(50)"/>
+         <column name="last_modified_date" type="BINARY(255)"/>
+         <column name="error_message" type="VARCHAR(2000)"/>
+         <column name="task_result" type="INT"/>
+         <column name="tf_times" type="BIGINT"/>
+         <column name="task_id" type="BIGINT"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-7">
+      <createTable tableName="_social_user_connection">
+         <column name="id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_by" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_date" type="BINARY(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="last_modified_by" type="VARCHAR(50)"/>
+         <column name="last_modified_date" type="BINARY(255)"/>
+         <column name="access_token" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="display_name" type="VARCHAR(255)"/>
+         <column name="expire_time" type="BIGINT"/>
+         <column name="image_url" type="VARCHAR(255)"/>
+         <column name="profile_url" type="VARCHAR(255)"/>
+         <column name="provider_id" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="provider_user_id" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="rank" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="refresh_token" type="VARCHAR(255)"/>
+         <column name="secret" type="VARCHAR(255)"/>
+         <column name="user_id" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-8">
+      <createTable tableName="_user">
+         <column name="id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_by" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="created_date" type="BINARY(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="last_modified_by" type="VARCHAR(50)"/>
+         <column name="last_modified_date" type="BINARY(255)"/>
+         <column name="activated" type="BOOLEAN">
+            <constraints nullable="false"/>
+         </column>
+         <column name="activation_key" type="VARCHAR(20)"/>
+         <column name="email" type="VARCHAR(100)"/>
+         <column name="first_name" type="VARCHAR(50)"/>
+         <column name="image_url" type="VARCHAR(256)"/>
+         <column name="lang_key" type="VARCHAR(6)"/>
+         <column name="last_name" type="VARCHAR(50)"/>
+         <column name="login" type="VARCHAR(100)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="password_hash" type="VARCHAR(60)"/>
+         <column name="reset_date" type="BINARY(255)"/>
+         <column name="reset_key" type="VARCHAR(20)"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-9">
+      <createTable tableName="_user_roles">
+         <column name="user_id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="role_id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-10">
+      <createTable tableName="jhi_entity_audit_event">
+         <column name="id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="action" type="VARCHAR(20)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="commit_version" type="INT"/>
+         <column name="entity_id" type="BIGINT">
+            <constraints nullable="false"/>
+         </column>
+         <column name="entity_type" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="entity_value" type="CLOB"/>
+         <column name="modified_by" type="VARCHAR(100)"/>
+         <column name="modified_date" type="BINARY(255)">
+            <constraints nullable="false"/>
+         </column>
+      </createTable>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-11">
+      <addPrimaryKey columnNames="event_id, name" tableName="_persistent_audit_evt_data"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-12">
+      <addPrimaryKey columnNames="user_id, role_id" tableName="_user_roles"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-13">
+      <addPrimaryKey columnNames="id"
+                     constraintName="_access_permissionPK"
+                     tableName="_access_permission"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-14">
+      <addPrimaryKey columnNames="event_id"
+                     constraintName="_persistent_audit_eventPK"
+                     tableName="_persistent_audit_event"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-15">
+      <addPrimaryKey columnNames="id" constraintName="_rolePK" tableName="_role"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-16">
+      <addPrimaryKey columnNames="id"
+                     constraintName="_schedule_taskPK"
+                     tableName="_schedule_task"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-17">
+      <addPrimaryKey columnNames="id"
+                     constraintName="_schedule_task_logPK"
+                     tableName="_schedule_task_log"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-18">
+      <addPrimaryKey columnNames="id"
+                     constraintName="_social_user_connectionPK"
+                     tableName="_social_user_connection"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-19">
+      <addPrimaryKey columnNames="id" constraintName="_userPK" tableName="_user"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-20">
+      <addPrimaryKey columnNames="id"
+                     constraintName="jhi_entity_audit_eventPK"
+                     tableName="jhi_entity_audit_event"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-21">
+      <addUniqueConstraint columnNames="email"
+                           constraintName="UC__USEREMAIL_COL"
+                           tableName="_user"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-22">
+      <addUniqueConstraint columnNames="login"
+                           constraintName="UC__USERLOGIN_COL"
+                           tableName="_user"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-23">
+      <addForeignKeyConstraint baseColumnNames="user_id"
+                               baseTableName="_user_roles"
+                               constraintName="FK1knb08qasyc3njr6m6je05u4f"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="_user"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-24">
+      <addForeignKeyConstraint baseColumnNames="task_id"
+                               baseTableName="_schedule_task_log"
+                               constraintName="FKc07d2ub7a417pjnsj27ijo2p"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="_schedule_task"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-25">
+      <addForeignKeyConstraint baseColumnNames="role_id"
+                               baseTableName="_user_roles"
+                               constraintName="FKfrs0oltmj42g4uhim1cmflejq"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="_role"/>
+   </changeSet>
+   <changeSet author="35328 (generated)" id="1516885766986-26">
+      <addForeignKeyConstraint baseColumnNames="event_id"
+                               baseTableName="_persistent_audit_evt_data"
+                               constraintName="FKj5nx4rycyxgnsb1xrl0vd8qgt"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="event_id"
+                               referencedTableName="_persistent_audit_event"/>
+   </changeSet>
+</databaseChangeLog>

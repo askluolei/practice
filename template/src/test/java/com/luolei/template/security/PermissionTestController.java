@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class PermissionTestController {
 
     @GetMapping("/user")
-    @Secured(AuthoritiesConstants.USER)
+    @Secured(RolesConstants.USER)
     public void user() {
     }
 
     @GetMapping("/admin")
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(RolesConstants.ADMIN)
     public void admin() {
     }
 

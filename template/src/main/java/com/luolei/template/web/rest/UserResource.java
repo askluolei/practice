@@ -4,7 +4,7 @@ import com.luolei.template.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 import com.luolei.template.domain.User;
 import com.luolei.template.repository.UserRepository;
-import com.luolei.template.security.AuthoritiesConstants;
+import com.luolei.template.security.RolesConstants;
 import com.luolei.template.service.MailService;
 import com.luolei.template.service.UserService;
 import com.luolei.template.service.dto.UserDTO;
@@ -35,7 +35,7 @@ import java.util.*;
  * <p>
  * This class accesses the User entity, and needs to fetch its collection of authorities.
  * <p>
- * For a normal use-case, it would be better to have an eager relationship between User and Authority,
+ * For a normal use-case, it would be better to have an eager relationship between User and Role,
  * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join
  * which would be good for performance.
  * <p>
@@ -87,7 +87,7 @@ public class UserResource {
      */
     @PostMapping("/users")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(RolesConstants.ADMIN)
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
@@ -117,7 +117,7 @@ public class UserResource {
      */
     @PutMapping("/users")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(RolesConstants.ADMIN)
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
@@ -153,9 +153,9 @@ public class UserResource {
      */
     @GetMapping("/users/authorities")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(RolesConstants.ADMIN)
     public List<String> getAuthorities() {
-        return userService.getAuthorities();
+        return userService.getRoles();
     }
 
     /**
@@ -181,7 +181,7 @@ public class UserResource {
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(RolesConstants.ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);

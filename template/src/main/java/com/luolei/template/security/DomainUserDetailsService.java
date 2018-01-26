@@ -1,7 +1,7 @@
 package com.luolei.template.security;
 
 import com.luolei.template.domain.AccessPermission;
-import com.luolei.template.domain.Authority;
+import com.luolei.template.domain.Role;
 import com.luolei.template.domain.User;
 import com.luolei.template.repository.AccessPermissionRepository;
 import com.luolei.template.repository.UserRepository;
@@ -48,17 +48,17 @@ public class DomainUserDetailsService implements UserDetailsService {
                 throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
 
-            List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
-                    .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+            List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
+                    .map(role -> new SimpleGrantedAuthority(role.getName()))
                     .collect(Collectors.toList());
 
             /**
              * 这里将扩展跟spring-security 结合
              */
             List<GrantedAuthority> accessPermissions = new ArrayList<>();
-            for (Authority authority : user.getAuthorities()) {
-                if (authority.getName().startsWith("ROLE_")) {
-                    List<AccessPermission> permissionList = accessPermissionRepository.findByRoleName(authority.getName());
+            for (Role role : user.getRoles()) {
+                if (role.getName().startsWith("ROLE_")) {
+                    List<AccessPermission> permissionList = accessPermissionRepository.findByRoleName(role.getName());
                     if (!permissionList.isEmpty()) {
                         permissionList.forEach(accessPermission -> {
                             accessPermissions.add(new SimpleGrantedAuthority(accessPermission.getProtectedResource() + ":" + accessPermission.getHatchPermission().name()));

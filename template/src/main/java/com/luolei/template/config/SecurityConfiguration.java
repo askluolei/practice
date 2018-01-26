@@ -1,6 +1,6 @@
 package com.luolei.template.config;
 
-import com.luolei.template.security.AuthoritiesConstants;
+import com.luolei.template.security.RolesConstants;
 import com.luolei.template.security.jwt.JWTConfigurer;
 import com.luolei.template.security.jwt.TokenProvider;
 import org.springframework.beans.factory.BeanInitializationException;
@@ -109,13 +109,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/account/reset-password/finish").permitAll()
                 .antMatchers("/api/profile-info").permitAll()
                 .antMatchers("/api/**").authenticated()
-                .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/websocket/tracker").hasAuthority(RolesConstants.ADMIN)
                 .antMatchers("/websocket/**").permitAll()
                 .antMatchers("/management/health").permitAll()
-                .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/management/**").hasAuthority(RolesConstants.ADMIN)
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/swagger-resources/configuration/ui").permitAll()
-                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/swagger-ui/index.html").hasAuthority(RolesConstants.ADMIN)
                 .and()
                 .apply(securityConfigurerAdapter());
 

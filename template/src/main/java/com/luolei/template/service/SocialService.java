@@ -1,10 +1,10 @@
 package com.luolei.template.service;
 
-import com.luolei.template.domain.Authority;
+import com.luolei.template.domain.Role;
 import com.luolei.template.domain.User;
-import com.luolei.template.repository.AuthorityRepository;
+import com.luolei.template.repository.RoleRepository;
 import com.luolei.template.repository.UserRepository;
-import com.luolei.template.security.AuthoritiesConstants;
+import com.luolei.template.security.RolesConstants;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +29,7 @@ public class SocialService {
 
     private final UsersConnectionRepository usersConnectionRepository;
 
-    private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -37,12 +37,12 @@ public class SocialService {
 
     private final MailService mailService;
 
-    public SocialService(UsersConnectionRepository usersConnectionRepository, AuthorityRepository authorityRepository,
+    public SocialService(UsersConnectionRepository usersConnectionRepository, RoleRepository roleRepository,
             PasswordEncoder passwordEncoder, UserRepository userRepository,
             MailService mailService) {
 
         this.usersConnectionRepository = usersConnectionRepository;
-        this.authorityRepository = authorityRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.mailService = mailService;
@@ -94,8 +94,8 @@ public class SocialService {
 
         String login = getLoginDependingOnProviderId(userProfile, providerId);
         String encryptedPassword = passwordEncoder.encode(RandomStringUtils.random(10));
-        Set<Authority> authorities = new HashSet<>(1);
-        authorities.add(authorityRepository.findOne(AuthoritiesConstants.USER));
+        Set<Role> roles = new HashSet<>(1);
+        roles.add(roleRepository.findByName(RolesConstants.USER));
 
         User newUser = new User();
         newUser.setLogin(login);
@@ -104,7 +104,7 @@ public class SocialService {
         newUser.setLastName(userProfile.getLastName());
         newUser.setEmail(email);
         newUser.setActivated(true);
-        newUser.setAuthorities(authorities);
+        newUser.setRoles(roles);
         newUser.setLangKey(langKey);
         newUser.setImageUrl(imageUrl);
 

@@ -45,6 +45,8 @@ spring:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
+        hibernate:
+          ddl-auto: update
     mail:
         host: localhost
         port: 25
@@ -52,9 +54,6 @@ spring:
         password:
     thymeleaf:
         cache: true
-
-liquibase:
-    contexts: prod
 
 # ===================================================================
 # To enable SSL, generate a certificate using:

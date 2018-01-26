@@ -2,7 +2,6 @@ package com.luolei.template.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.luolei.template.config.Constants;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,10 +26,14 @@ import java.util.Set;
  * @time 17:19
  */
 @Entity
-@Table(name = "_user")
+@Table(name = "_user",
+    indexes = {
+        @Index(name = "UK_LOGIN", columnList = "login", unique = true),
+        @Index(name = "UK_EMAIL", columnList = "email", unique = true)
+    })
 @Getter
 @Setter
-@ToString(exclude = {"authorities"})
+@ToString(exclude = {"_user_roles"})
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,11 +91,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "_user_authority",
+            name = "_user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     @BatchSize(size = 20)
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     // Lowercase the login before saving it in database
     public void setLogin(String login) {

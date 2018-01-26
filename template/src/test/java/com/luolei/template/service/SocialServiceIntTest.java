@@ -1,11 +1,11 @@
 package com.luolei.template.service;
 
 import com.luolei.template.TemplateApp;
-import com.luolei.template.domain.Authority;
+import com.luolei.template.domain.Role;
 import com.luolei.template.domain.User;
-import com.luolei.template.repository.AuthorityRepository;
+import com.luolei.template.repository.RoleRepository;
 import com.luolei.template.repository.UserRepository;
-import com.luolei.template.security.AuthoritiesConstants;
+import com.luolei.template.security.RolesConstants;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 public class SocialServiceIntTest {
 
     @Autowired
-    private AuthorityRepository authorityRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -58,7 +58,7 @@ public class SocialServiceIntTest {
         doNothing().when(mockConnectionRepository).addConnection(anyObject());
         when(mockUsersConnectionRepository.createConnectionRepository(anyString())).thenReturn(mockConnectionRepository);
 
-        socialService = new SocialService(mockUsersConnectionRepository, authorityRepository,
+        socialService = new SocialService(mockUsersConnectionRepository, roleRepository,
                 passwordEncoder, userRepository, mockMailService);
     }
 
@@ -189,8 +189,8 @@ public class SocialServiceIntTest {
         User user = userRepository.findOneByEmailIgnoreCase("mail@mail.com").get();
         assertThat(user.isActivated()).isEqualTo(true);
         assertThat(user.getPassword()).isNotEmpty();
-        Authority userAuthority = authorityRepository.findOne(AuthoritiesConstants.USER);
-        assertThat(user.getAuthorities().toArray()).containsExactly(userAuthority);
+        Role userRole = roleRepository.findByName(RolesConstants.USER);
+        assertThat(user.getRoles().toArray()).containsExactly(userRole);
 
         // Teardown
         userRepository.delete(user);
