@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
@@ -70,5 +72,24 @@ public class MapTest {
         System.out.println(map.getClass().getName());
     }
 
+    @Test
+    public void test5() {
+        Map<Integer, String> map = new HashMap<>();
+        Integer one = new Integer(1);
+        Integer two = new Integer(2);
+        map.put(one, "1");
+        map.put(two, "2");
+        System.out.println(map.size());
+        System.out.println(map.containsKey((Integer) 1));
+    }
+
+    @Test
+    public void test6() {
+        ConcurrentMap<String, Boolean> map = new ConcurrentHashMap<>();
+        map.put("123", false);
+        map.put("123", true);
+
+        System.out.println(map.get("123"));
+    }
 
 }
