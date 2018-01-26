@@ -53,6 +53,7 @@
     "audits": "audits",
     "logs": "logs",
     "docs": "docs",
-    "entityAudit": "entityAudit"
+    "entityAudit": "entityAudit",
+    "schedule": "schedule"
   }
 }

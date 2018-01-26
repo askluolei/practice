@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function getScheduleTasks(params) {
+  return request({
+    url: '/api/schedule/task',
+    method: 'get',
+    params
+  })
+}
+
 export function metrics() {
   return request({
     url: '/management/metrics',

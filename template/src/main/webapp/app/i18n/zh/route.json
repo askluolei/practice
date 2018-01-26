@@ -53,6 +53,7 @@
     "audits": "审计",
     "logs": "日志配置",
     "docs": "接口文档",
-    "entityAudit": "实体类审计"
+    "entityAudit": "实体类审计",
+    "schedule": "调度"
   }
 }
