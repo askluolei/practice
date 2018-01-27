@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 
@@ -44,7 +45,6 @@ public class ScheduleLog extends AbstractAuditingEntity {
      */
     @ManyToOne
     @JoinColumn(name = "task_id")
-    @JsonIgnoreProperties("logs")
     private ScheduleTask task;
 
 }

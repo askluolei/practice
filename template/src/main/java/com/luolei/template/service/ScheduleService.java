@@ -1,5 +1,6 @@
 package com.luolei.template.service;
 
+import com.luolei.template.domain.ScheduleLog;
 import com.luolei.template.domain.ScheduleTask;
 import com.luolei.template.domain.ScheduleTaskStatus;
 import com.luolei.template.repository.ScheduleLogRepository;
@@ -54,6 +55,11 @@ public class ScheduleService {
                 ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
             }
         }
+    }
+
+    public Page<ScheduleLog> getTaskLogsById(Long id, Pageable pageable) {
+        log.debug("get schedule task logs by id:{}", id);
+        return jobLogDao.findByTask(ScheduleTask.fromId(id), pageable);
     }
 
     public Optional<ScheduleTask> getById(Long id) {

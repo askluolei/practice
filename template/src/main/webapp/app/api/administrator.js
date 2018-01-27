@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function getScheduleTaskLogs(id, params) {
+  return request({
+    url: '/api/schedule/task-logs/' + id,
+    method: 'get',
+    params
+  })
+}
+
 export function getScheduleTasks(params) {
   return request({
     url: '/api/schedule/task',

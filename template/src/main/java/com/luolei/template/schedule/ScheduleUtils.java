@@ -54,7 +54,8 @@ public class ScheduleUtils {
             //根据cron，构建一个CronTrigger
             CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(scheduleJob.getId())).withSchedule(scheduleBuilder).build();
 
-            //放入参数，运行时的方法可以获取
+            //放入参数，运行时的方法可以获取, 这里注意的是 JSON 序列化的时候触发延时加载了，但是session已经关闭 设置为null 不需要logs
+            scheduleJob.setLogs(null);
             jobDetail.getJobDataMap().put(ScheduleTask.JOB_PARAM_KEY, JSON.toJSONString(scheduleJob));
 
             scheduler.scheduleJob(jobDetail, trigger);

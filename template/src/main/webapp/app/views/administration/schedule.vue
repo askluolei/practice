@@ -16,9 +16,16 @@
           <span @click="showLogs(scope.row)"><i class="el-icon-view"></i></span>
         </template>
       </el-table-column>
+      <el-table-column label="">
+        <template slot-scope="scope">
+          <el-button @click="handleEditClick(scope.row)">编辑</el-button>
+        </template>
+      </el-table-column>
     </el-table>
+    <el-pagination :current-page="taskPagination.page + 1" :page-size="taskPagination.size" :total="taskPagination.total" @current-change="tasksPageChange"></el-pagination>
+
     <el-dialog :visible.sync="logDialogShow" title="调度执行日志">
-      <el-table :data="selectedTaskLogs">
+      <el-table :data="taskLogs">
         <el-table-column prop="result" label="执行结果">
           <template slot-scope="scope">
             <el-tag type="success" v-if="scope.row.result === 'SUCCESS'">{{scope.row.result}}</el-tag>
@@ -28,13 +35,18 @@
         <el-table-column prop="times" label="耗时（ms）"></el-table-column>
         <el-table-column prop="error" label="失败信息"></el-table-column>
       </el-table>
+      <el-pagination :current-page="logsPagination.page + 1" :page-size="logsPagination.size" :total="logsPagination.total" @current-change="logsPageChange"></el-pagination>
     </el-dialog>
   </div>  
 </template>
 
 <script>
-  import { getScheduleTasks } from '@/api/administrator'
+  import { getScheduleTasks, getScheduleTaskLogs } from '@/api/administrator'
+  import Cron from '@/components/Cron'
   export default {
+    components: {
+      cron: Cron
+    },
     data() {
       return {
         queryParams: {
@@ -46,33 +58,60 @@
           total: 0
         },
         shceduleTasks: [],
-        selectedTask: undefined,
-        logDialogShow: false
+        taskPagination: {
+          page: 0,
+          size: 10,
+          total: 0
+        },
+        selectedRow: undefined,
+        logDialogShow: false,
+        taskLogs: [],
+        logsPagination: {
+          page: 0,
+          size: 10,
+          total: 0
+        }
       }
     },
     computed: {
-      selectedTaskLogs() {
-        let result = []
-        if (this.selectedTask && this.selectedTask.logs) {
-          result = this.selectedTask.logs
-        }
-        return result
-      }
     },
     methods: {
-      showLogs(row) {
-        this.selectedTask = row
-        this.logDialogShow = true
+      handleEditClick(row) {
+        console.log(row)
       },
-      init() {
-        const params = {
-          pageNumber: 0,
-          pageSize: 10
-        }
+      logsPageChange(currentPage) {
+        this.logsPagination.page = currentPage - 1
+        const id = this.selectedRow.id
+        this.getScheduleTaskLogs(id, this.logsPagination)
+      },
+      showLogs(row) {
+        this.selectedRow = row
+        const id = row.id
+        this.getScheduleTaskLogs(id, this.logsPagination)
+      },
+      getScheduleTaskLogs(id, params) {
+        getScheduleTaskLogs(id, params)
+          .then(response => {
+            this.taskLogs = response.data || []
+            this.logDialogShow = true
+            const total = response.headers['x-total-count']
+            this.logsPagination.total = total ? Number(total) : response.data.length
+          })
+      },
+      getScheduleTasks(params) {
         getScheduleTasks(params)
           .then(response => {
             this.shceduleTasks = response.data
+            const total = response.headers['x-total-count']
+            this.taskPagination.total = total ? Number(total) : response.data.length
           })
+      },
+      tasksPageChange(currentPage) {
+        this.taskPagination.page = currentPage - 1
+        this.getScheduleTasks(this.taskPagination)
+      },
+      init() {
+        this.getScheduleTasks(this.taskPagination)
       }
     },
     mounted() {

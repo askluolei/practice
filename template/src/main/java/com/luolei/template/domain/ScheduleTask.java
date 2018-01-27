@@ -1,5 +1,6 @@
 package com.luolei.template.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,17 @@ public class ScheduleTask extends AbstractAuditingEntity {
      * 任务调度参数key
      */
     public static final String JOB_PARAM_KEY = "JOB_PARAM_KEY";
+
+    /**
+     * new 对象 只设置id
+     * @param id
+     * @return
+     */
+    public static ScheduleTask fromId(Long id) {
+        ScheduleTask task = new ScheduleTask();
+        task.setId(id);
+        return task;
+    }
 
     /**
      * spring bean名称
@@ -71,8 +83,7 @@ public class ScheduleTask extends AbstractAuditingEntity {
     /**
      * 任务执行日志
      */
-    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
-    @BatchSize(size = 20)
-    @JsonIgnoreProperties("task")
+    @OneToMany(mappedBy = "task", cascade = {CascadeType.REMOVE})
+    @JsonIgnore
     private Set<ScheduleLog> logs;
 }

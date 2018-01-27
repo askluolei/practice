@@ -1,5 +1,6 @@
 package com.luolei.template.web.rest;
 
+import com.luolei.template.domain.ScheduleLog;
 import com.luolei.template.domain.ScheduleTask;
 import com.luolei.template.domain.ScheduleTaskStatus;
 import com.luolei.template.schedule.ScheduleJobExecutor;
@@ -107,6 +108,14 @@ public class ScheduleController {
     public ResponseEntity<ScheduleTask> getScheduleTask(@PathVariable Long id) {
         log.debug("request to get schedule task by id : {}", id);
         return ResponseUtil.wrapOrNotFound(scheduleService.getById(id));
+    }
+
+    @GetMapping("/schedule/task-logs/{id}")
+    public ResponseEntity<List<ScheduleLog>> getScheduleLog(@PathVariable Long id, Pageable pageable) {
+        log.debug("request to load task logs by id:{}", id);
+        Page<ScheduleLog> page = scheduleService.getTaskLogsById(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/schedule/task-logs/" + id);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     @GetMapping("/schedule/beans")

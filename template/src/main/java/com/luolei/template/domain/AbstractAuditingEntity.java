@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 
 /**
  * 需要审计的实体类继承这个
@@ -58,4 +59,25 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private Instant lastModifiedDate = Instant.now();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        AbstractAuditingEntity auditingEntity = (AbstractAuditingEntity) obj;
+        if(auditingEntity.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), auditingEntity.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }
