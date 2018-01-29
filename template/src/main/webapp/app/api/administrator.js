@@ -16,6 +16,29 @@ export function getScheduleTasks(params) {
   })
 }
 
+export function getScheduleBeans() {
+  return request({
+    url: '/api/schedule/beans',
+    method: 'get'
+  })
+}
+
+export function addScheduleTask(data) {
+  return request({
+    url: '/api/schedule/task',
+    method: 'post',
+    data
+  })
+}
+
+export function updateScheduleTask(data) {
+  return request({
+    url: '/api/schedule/task',
+    method: 'put',
+    data
+  })
+}
+
 export function metrics() {
   return request({
     url: '/management/metrics',

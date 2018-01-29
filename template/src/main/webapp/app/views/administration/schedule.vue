@@ -1,6 +1,7 @@
 <template>
   <div class="schedule-wrapper">
     <h3>调度任务</h3>
+    <el-button @click="handleAddClick">新增调度任务</el-button>
     <el-table :data="shceduleTasks" stripe>
       <el-table-column prop="beanName" label="任务处理类"></el-table-column>
       <el-table-column prop="cronExpression" label="调度配置"></el-table-column>
@@ -37,11 +38,42 @@
       </el-table>
       <el-pagination :current-page="logsPagination.page + 1" :page-size="logsPagination.size" :total="logsPagination.total" @current-change="logsPageChange"></el-pagination>
     </el-dialog>
+
+    <el-dialog title="调度配置" :visible.sync="editDialogShow">
+      <el-form :model="editForm" label-position="top">
+        <el-form-item prop="beanName" label="调度类">
+          <el-autocomplete class="bean-input" v-model="editForm.beanName" :fetch-suggestions="querySearchBeanName" valueKey="beanName">
+            <template slot-scope="props">
+              <div class="name">类名:{{ props.item.beanName }}</div>
+              <span class="addr">调度说明:{{ props.item.explain }}</span>
+            </template>
+          </el-autocomplete>
+          <!-- <el-select v-model="editForm.beanName">
+            <el-option v-for="item of scheduleBeans" :key="item.beanName" :label="item.explain + ' (' + item.beanName + ')'" :value="item.beanName"></el-option>
+          </el-select> -->
+        </el-form-item>
+        <el-form-item prop="status" label="状态">
+          <el-select v-model="editForm.status">
+            <el-option label="正常" value="NORMAL"></el-option>
+            <el-option label="暂停" value="PAUSE"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="cronExpression" label="定时策略">
+          <el-popover v-model="cronPopover">
+            <cron @change="changeCron" @close="cronPopover=false"></cron>
+            <el-input slot="reference" @click="cronPopover=true" v-model="editForm.cronExpression" placeholder="请输入定时策略"></el-input>
+          </el-popover>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="handleSave">保存</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>  
 </template>
 
 <script>
-  import { getScheduleTasks, getScheduleTaskLogs } from '@/api/administrator'
+  import { getScheduleTasks, getScheduleTaskLogs, getScheduleBeans, addScheduleTask, updateScheduleTask } from '@/api/administrator'
   import Cron from '@/components/Cron'
   export default {
     components: {
@@ -49,6 +81,7 @@
     },
     data() {
       return {
+        scheduleBeans: [],
         queryParams: {
           beanName: '',
           status: 'NORMAL'
@@ -70,14 +103,81 @@
           page: 0,
           size: 10,
           total: 0
-        }
+        },
+        editForm: {
+          id: '',
+          beanName: '',
+          status: 'NORMAL',
+          cronExpression: ''
+        },
+        editFormType: 'edit',
+        cronPopover: false,
+        editDialogShow: false
       }
     },
     computed: {
     },
     methods: {
+      handleAddClick() {
+        this.editForm.beanName = ''
+        this.editForm.status = ''
+        this.editForm.cronExpression = ''
+        this.editForm.id = ''
+        this.editFormType = 'add'
+        this.editDialogShow = true
+      },
+      querySearchBeanName(queryString, cb) {
+        const matchedBeans = this.scheduleBeans.filter(this.createBeanFilter(queryString))
+        cb(matchedBeans)
+      },
+      createBeanFilter(queryString) {
+        return (bean) => {
+          let match = false
+          match = match || bean.beanName.toLowerCase().indexOf(queryString.toLowerCase()) !== -1
+          match = match || bean.explain.toLowerCase().indexOf(queryString.toLowerCase()) !== -1
+          match = match || bean.author.toLowerCase().indexOf(queryString.toLowerCase()) !== -1
+          return match
+        }
+      },
+      changeCron(cron) {
+        this.editForm.cronExpression = cron
+      },
       handleEditClick(row) {
-        console.log(row)
+        this.editForm.beanName = row.beanName
+        this.editForm.status = row.status
+        this.editForm.cronExpression = row.cronExpression
+        this.editForm.id = row.id
+        this.editFormType = 'edit'
+        this.editDialogShow = true
+      },
+      handleSave() {
+        if (this.editFormType === 'edit') {
+          this.updateTask()
+        } else {
+          this.addTask()
+        }
+      },
+      addTask() {
+        addScheduleTask(this.editForm)
+          .then(response => {
+            this.$message({
+              type: 'success',
+              message: '添加调度任务成功'
+            })
+            this.getScheduleTasks()
+            this.editDialogShow = false
+          })
+      },
+      updateTask() {
+        updateScheduleTask(this.editForm)
+          .then(response => {
+            this.$message({
+              type: 'success',
+              message: '修改调度任务成功'
+            })
+            this.getScheduleTasks()
+            this.editDialogShow = false
+          })
       },
       logsPageChange(currentPage) {
         this.logsPagination.page = currentPage - 1
@@ -110,8 +210,15 @@
         this.taskPagination.page = currentPage - 1
         this.getScheduleTasks(this.taskPagination)
       },
+      getScheduleBeans() {
+        getScheduleBeans()
+          .then(response => {
+            this.scheduleBeans = response.data
+          })
+      },
       init() {
         this.getScheduleTasks(this.taskPagination)
+        this.getScheduleBeans()
       }
     },
     mounted() {
@@ -123,5 +230,18 @@
 <style lang="scss" scoped>
   .schedule-wrapper {
     margin: 10px 20px;
+    
+    .bean-input {
+      width: 100%;
+
+      .name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .addr {
+        font-size: 12px;
+        color: #b4b4b4;
+      }
+    }
   }
 </style>
