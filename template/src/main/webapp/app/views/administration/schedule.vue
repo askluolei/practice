@@ -11,6 +11,7 @@
           <el-tag type="warning" v-else>{{scope.row.status}}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="nextFireTime" label="下次触发时间"></el-table-column>
       <el-table-column prop="remark" label="备注"></el-table-column>
       <el-table-column label="执行日志">
         <template slot-scope="scope">
@@ -20,6 +21,7 @@
       <el-table-column label="">
         <template slot-scope="scope">
           <el-button @click="handleEditClick(scope.row)">编辑</el-button>
+          <el-button @click="handleDelete(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -60,7 +62,7 @@
         </el-form-item>
         <el-form-item prop="cronExpression" label="定时策略">
           <el-popover v-model="cronPopover">
-            <cron @change="changeCron" @close="cronPopover=false"></cron>
+            <cron @change="changeCron" @close="cronPopover=false" :data="editForm.cronExpression"></cron>
             <el-input slot="reference" @click="cronPopover=true" v-model="editForm.cronExpression" placeholder="请输入定时策略"></el-input>
           </el-popover>
         </el-form-item>
@@ -73,7 +75,7 @@
 </template>
 
 <script>
-  import { getScheduleTasks, getScheduleTaskLogs, getScheduleBeans, addScheduleTask, updateScheduleTask } from '@/api/administrator'
+  import { getScheduleTasks, getScheduleTaskLogs, getScheduleBeans, addScheduleTask, updateScheduleTask, deleteScheduleTask } from '@/api/administrator'
   import Cron from '@/components/Cron'
   export default {
     components: {
@@ -118,6 +120,33 @@
     computed: {
     },
     methods: {
+      handleDelete(id) {
+        this.$confirm('此操作将删除该调度配置,不可回滚, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteScheduleTask(id)
+            .then(response => {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              this.getScheduleTasks()
+            })
+            .catch(error => {
+              this.$message({
+                type: 'success',
+                message: '删除失败:' + error
+              })
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
       handleAddClick() {
         this.editForm.beanName = ''
         this.editForm.status = ''

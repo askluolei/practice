@@ -5,6 +5,13 @@ import com.luolei.template.domain.ScheduleTask;
 import com.luolei.template.domain.ScheduleTaskStatus;
 import com.luolei.template.web.rest.errors.BizError;
 import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author 罗雷
@@ -12,6 +19,8 @@ import org.quartz.*;
  * @time 19:41
  */
 public class ScheduleUtils {
+
+    private static final Logger log = LoggerFactory.getLogger(ScheduleUtils.class);
 
     private static final String JOB_NAME = "TASK_";
 
@@ -37,6 +46,18 @@ public class ScheduleUtils {
             return (CronTrigger) scheduler.getTrigger(getTriggerKey(jobId));
         } catch (SchedulerException e) {
             throw BizError.SCHEDULE_CONFIG_ERROR.exception(e, "getCronTrigger异常，请检查qrtz开头的表，是否有脏数据");
+        }
+    }
+
+    public static void addNextTriggerTime(Scheduler scheduler, ScheduleTask scheduleTask) {
+        try {
+            Trigger trigger = scheduler.getTrigger(getTriggerKey(scheduleTask.getId()));
+            Date nextFireTime = trigger.getNextFireTime();
+            if (Objects.nonNull(nextFireTime)) {
+                scheduleTask.setNextFireTime(nextFireTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+            }
+        } catch (SchedulerException e) {
+            log.error("get nextFireTime error", e);
         }
     }
 

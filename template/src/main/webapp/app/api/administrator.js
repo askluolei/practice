@@ -39,6 +39,13 @@ export function updateScheduleTask(data) {
   })
 }
 
+export function deleteScheduleTask(id) {
+  return request({
+    url: '/api/schedule/task/' + id,
+    method: 'delete'
+  })
+}
+
 export function metrics() {
   return request({
     url: '/management/metrics',

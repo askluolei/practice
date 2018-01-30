@@ -9,6 +9,7 @@ import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -86,4 +87,10 @@ public class ScheduleTask extends AbstractAuditingEntity {
     @OneToMany(mappedBy = "task", cascade = {CascadeType.REMOVE})
     @JsonIgnore
     private Set<ScheduleLog> logs;
+
+    /**
+     * 下次触发的时间
+     */
+    @Transient
+    private LocalDateTime nextFireTime;
 }

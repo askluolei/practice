@@ -69,7 +69,10 @@ public class ScheduleService {
 
     public Page<ScheduleTask> queryAll(Pageable pageable) {
         log.debug("query all ScheduleTask. pageable:{}", pageable);
-        return jobDao.findAll(pageable);
+        Page<ScheduleTask> page = jobDao.findAll(pageable);
+        page.getContent().stream().filter(scheduleTask -> scheduleTask.getStatus() == ScheduleTaskStatus.NORMAL)
+            .forEach(scheduleTask -> ScheduleUtils.addNextTriggerTime(scheduler, scheduleTask));
+        return page;
     }
 
     public Page<ScheduleTask> queryByBeanName(Pageable pageable, String beanName) {

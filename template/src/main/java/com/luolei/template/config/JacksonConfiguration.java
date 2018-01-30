@@ -1,9 +1,11 @@
 package com.luolei.template.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 
 import org.springframework.context.annotation.Bean;
@@ -56,6 +58,14 @@ public class JacksonConfiguration extends WebMvcConfigurerAdapter {
         return new ConstraintViolationProblemModule();
     }
 
+    /*
+     * Module for serialization/deserialization JAVA8 Date api
+     */
+    @Bean
+    JavaTimeModule javaTimeModule() {
+        return new JavaTimeModule();
+    }
+
     /**
      * 用 Long 类型做主键  返回给前端精度丢失问题
      */
@@ -70,5 +80,6 @@ public class JacksonConfiguration extends WebMvcConfigurerAdapter {
         objectMapper.registerModule(simpleModule);
         jackson2HttpMessageConverter.setObjectMapper(objectMapper);
         converters.add(0, jackson2HttpMessageConverter);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 }
