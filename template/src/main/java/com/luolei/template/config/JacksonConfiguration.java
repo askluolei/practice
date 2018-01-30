@@ -66,7 +66,7 @@ public class JacksonConfiguration extends WebMvcConfigurerAdapter {
         return new JavaTimeModule();
     }
 
-    /**
+    /*
      * 用 Long 类型做主键  返回给前端精度丢失问题
      */
     @Override

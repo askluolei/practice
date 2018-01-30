@@ -42,7 +42,7 @@
     </el-dialog>
 
     <el-dialog title="调度配置" :visible.sync="editDialogShow">
-      <el-form :model="editForm" label-position="top">
+      <el-form :model="editForm" label-position="top" :rules="editFormRule">
         <el-form-item prop="beanName" label="调度类">
           <el-autocomplete class="bean-input" v-model="editForm.beanName" :fetch-suggestions="querySearchBeanName" valueKey="beanName">
             <template slot-scope="props">
@@ -65,6 +65,9 @@
             <cron @change="changeCron" @close="cronPopover=false" :data="editForm.cronExpression"></cron>
             <el-input slot="reference" @click="cronPopover=true" v-model="editForm.cronExpression" placeholder="请输入定时策略"></el-input>
           </el-popover>
+        </el-form-item>
+        <el-form-item prop="params" label="参数">
+          <el-input v-model="editForm.params" type="textarea" :rows="5" placeholder="请输入参数"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button @click="handleSave">保存</el-button>
@@ -110,7 +113,19 @@
           id: '',
           beanName: '',
           status: 'NORMAL',
-          cronExpression: ''
+          cronExpression: '',
+          params: ''
+        },
+        editFormRule: {
+          beanName: [
+            { required: true, message: '请选择调度类', trigger: 'blur' }
+          ],
+          status: [
+            { required: true, message: '请选择状态', trigger: 'blur' }
+          ],
+          cronExpression: [
+            { required: true, message: '请输入调度表达式', trigger: 'blur' }
+          ]
         },
         editFormType: 'edit',
         cronPopover: false,
@@ -272,5 +287,9 @@
         color: #b4b4b4;
       }
     }
+  }
+
+  .json-editor {
+    font-size: 14px;
   }
 </style>
