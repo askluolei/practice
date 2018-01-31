@@ -130,6 +130,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       { from: './node_modules/swagger-ui/dist/lib', to: 'swagger-ui/dist/lib' },
       { from: './node_modules/swagger-ui/dist/swagger-ui.min.js', to: 'swagger-ui/dist/swagger-ui.min.js' },
       { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
+      { from: './src/main/webapp/monaco-editor/', to: 'monaco-editor' },
       { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
       // { from: './src/main/webapp/sw.js', to: 'sw.js' },
       // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array

@@ -41,7 +41,7 @@ public class AccessPermissionResources {
      * @param accessPermissionVM
      * @return
      */
-    @PostMapping("/access-permission")
+//    @PostMapping("/access-permission")
     public ResponseEntity<AccessPermission> createPermission(@RequestBody AccessPermissionVM accessPermissionVM) {
         log.debug("Request to create a permission");
         return ResponseEntity.ok(accessPermissionService.createPermission(accessPermissionVM));
@@ -52,7 +52,7 @@ public class AccessPermissionResources {
      * @param accessPermissionVM
      * @return
      */
-    @PutMapping("/access-permission")
+//    @PutMapping("/access-permission")
     public ResponseEntity<AccessPermission> updatePermission(@RequestBody AccessPermissionVM accessPermissionVM) {
         log.debug("Request to update a permission");
         return ResponseEntity.ok(accessPermissionService.updatePermission(accessPermissionVM));
@@ -87,7 +87,7 @@ public class AccessPermissionResources {
      * @param id
      * @return
      */
-    @DeleteMapping("/access-permission/{id}")
+//    @DeleteMapping("/access-permission/{id}")
     public ResponseEntity<Void> deletePermission(@PathVariable Long id) {
         log.debug("request to delete a permission by id:{}", id);
         accessPermissionService.deletePermission(id);

@@ -96,12 +96,15 @@ export const asyncRouterMap = [
     redirect: 'noredirect',
     children: [{ path: 'index', component: _import('theme/index'), name: 'theme', meta: { title: 'theme', icon: 'theme' }}]
   },
-
   {
     path: '/i18n',
     component: Layout,
     children: [{ path: 'index', component: _import('i18n-demo/index'), name: 'i18n', meta: { title: 'i18n', icon: 'international' }}]
   },
-
+  {
+    path: '/test',
+    component: Layout,
+    children: [{ path: 'test', component: _import('administration/test'), name: 'test', meta: { title: 'test', icon: 'international' }}]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
