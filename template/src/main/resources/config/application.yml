@@ -60,6 +60,10 @@ spring:
         twitter:
             client-id: xxx
             client-secret: xxx
+    http:
+        multipart:
+            max-file-size: 1MB
+            max-request-size: 10MB
 
         # jhipster-needle-add-social-configuration
 security:
@@ -122,3 +126,29 @@ jhipster:
 # ===================================================================
 
 application:
+    sequence:
+        workerId: 0
+        datacenterId: 0
+#    oss:
+#        type: Qiniu
+#        qiniu:
+#            domain:
+#            prefix:
+#            accessKey:
+#            secretKey:
+#            bucketName:
+#        aliyun:
+#            domain:
+#            prefix:
+#            endPoint:
+#            accessKeyId:
+#            accessKeySecret:
+#            bucketName:
+#        qCloud:
+#            domain:
+#            prefix:
+#            appId:
+#            secretId:
+#            secretKey:
+#            bucketName:
+#            region:

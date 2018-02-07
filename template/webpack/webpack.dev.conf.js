@@ -7,6 +7,7 @@ var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const Jarvis = require("webpack-jarvis")
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -52,7 +53,10 @@ module.exports = merge(baseWebpackConfig, {
       // { from: './src/main/webapp/sw.js', to: 'sw.js' },
       // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
       { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
-    ])
+    ]),
+    new Jarvis({
+        port: 1337 // optional: set a port
+     })
   ]
 })
 

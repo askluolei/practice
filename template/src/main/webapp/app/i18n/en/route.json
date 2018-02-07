@@ -55,6 +55,8 @@
     "docs": "docs",
     "entityAudit": "entityAudit",
     "schedule": "schedule",
-    "test": "test"
+    "test": "test",
+    "userSetting": "userSetting",
+    "changePassword": "changePassword"
   }
 }

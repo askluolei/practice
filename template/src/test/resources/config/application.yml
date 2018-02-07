@@ -104,3 +104,26 @@ jhipster:
 # ===================================================================
 
 application:
+    oss:
+        type: Qiniu
+#        qiniu:
+#            domain:
+#            prefix:
+#            accessKey:
+#            secretKey:
+#            bucketName:
+#        aliyun:
+#            domain:
+#            prefix:
+#            endPoint:
+#            accessKeyId:
+#            accessKeySecret:
+#            bucketName:
+#        qCloud:
+#            domain:
+#            prefix:
+#            appId:
+#            secretId:
+#            secretKey:
+#            bucketName:
+#            region:

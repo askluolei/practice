@@ -8,15 +8,20 @@
       </el-select>
       <code-editor class="code-editor" height="600" :language="language" :code.sync="code" @codeChange="codeChange"></code-editor>
     </el-row>
-    
+    <el-row>
+      <h3>SQL 编辑器</h3>
+      <sql-editor :value="sql"></sql-editor>
+    </el-row>
   </div>
 </template>
 
 <script>
   import CodeEditor from '@/components/CodeEditor'
+  import SqlEditor from '@/components/SqlEditor'
   export default {
     components: {
-      'code-editor': CodeEditor
+      'code-editor': CodeEditor,
+      'sql-editor': SqlEditor
     },
     data() {
       return {
@@ -50,7 +55,8 @@
           'vb',
           'xml',
           'yaml'
-        ]
+        ],
+        sql: ''
       }
     },
     methods: {

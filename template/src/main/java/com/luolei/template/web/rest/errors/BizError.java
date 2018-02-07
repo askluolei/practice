@@ -13,7 +13,8 @@ public enum BizError {
     RESOURCE_NOT_EXIST("resource_not_exist", "资源不存在"),
     SCHEDULE_ERROR("schedule_error", "调度异常"),
     SCHEDULE_CONFIG_ERROR("schedule_config_error", "调度配置异常"),
-    REQUEST_PARAM_CHECK_ERROR("request_param_check_error", "参数检查未通过")
+    REQUEST_PARAM_CHECK_ERROR("request_param_check_error", "参数检查未通过"),
+    UPLOAD_ERROR("upload_error", "OSS 上传失败")
     ;
     private String code;
     private String msg;

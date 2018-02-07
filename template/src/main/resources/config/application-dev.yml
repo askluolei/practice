@@ -140,3 +140,26 @@ jhipster:
 # ===================================================================
 
 application:
+    oss:
+        type: Qiniu
+        qiniu:
+            domain: http://p1evq7qjz.bkt.clouddn.com
+            prefix:
+            accessKey:
+            secretKey:
+            bucketName: public
+        aliyun:
+            domain:
+            prefix:
+            endPoint:
+            accessKeyId:
+            accessKeySecret:
+            bucketName:
+        qCloud:
+            domain:
+            prefix:
+            appId:
+            secretId:
+            secretKey:
+            bucketName:
+            region:

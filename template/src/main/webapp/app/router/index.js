@@ -35,6 +35,25 @@ export const constantRouterMap = [
       name: 'dashboard',
       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
     }]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirct: 'setting',
+    hidden: true,
+    children: [{
+      path: 'setting/:login/:type',
+      component: _import('administration/components/userAdd'),
+      name: 'userSetting',
+      props: true,
+      meta: { title: 'userSetting' }
+    },
+    {
+      path: 'change-password',
+      component: _import('administration/components/changePassword'),
+      name: 'changePassword',
+      meta: { title: 'changePassword' }
+    }]
   }
 ]
 

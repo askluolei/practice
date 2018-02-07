@@ -48,10 +48,10 @@
       <user-detail :user="selectedUser"></user-detail>
     </el-dialog>
     <el-dialog :visible.sync="addDialog">
-      <user-add @submit="addUser" :visible.sync="addDialog"></user-add>
+      <user-add @submit="addUser" :visible.sync="addDialog" type="add"></user-add>
     </el-dialog>
     <el-dialog :visible.sync="editDialog">
-      <user-add @submit="updateUser" :visible.sync="editDialog" :editUser="selectedUser"></user-add>
+      <user-add @submit="updateUser" :visible.sync="editDialog" :editUser="selectedUser" type="edit"></user-add>
     </el-dialog>
   </div>
 </template>

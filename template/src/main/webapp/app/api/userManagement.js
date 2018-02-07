@@ -8,6 +8,17 @@ export function roleList() {
   })
 }
 
+// 修改密码
+export function changePassword(password) {
+  return request({
+    url: '/api/account/change-password',
+    method: 'post',
+    data: {
+      password
+    }
+  })
+}
+
 // 获取用户列表
 export function userList(params) {
   return request({

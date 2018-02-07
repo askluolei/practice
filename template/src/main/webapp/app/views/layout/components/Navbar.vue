@@ -32,16 +32,24 @@
           <i class="el-icon-caret-bottom"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+              当前用户:{{ name }}
+          </el-dropdown-item>
           <router-link to="/">
             <el-dropdown-item>
               首页
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          <router-link :to="'/user/setting/' + name + '/edit'">
             <el-dropdown-item>
-              项目地址
+              修改用户信息
             </el-dropdown-item>
-          </a>
+          </router-link>
+          <router-link to="/user/change-password">
+            <el-dropdown-item>
+              修改密码
+            </el-dropdown-item>
+          </router-link>
           <el-dropdown-item divided>
             <span @click="logout" style="display:block;">退出登录</span>
           </el-dropdown-item>
@@ -78,7 +86,8 @@ export default {
       'sidebar',
       'name',
       'avatar',
-      'language'
+      'language',
+      'name'
     ])
   },
   methods: {

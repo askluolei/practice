@@ -41,6 +41,9 @@ public class UserService {
 
     private final RoleRepository roleRepository;
 
+    private final String DEFAULT_PASSWORD = "helloworld";
+    private final String DEFAULT_ADMIN_PASSWORD = "super";
+
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SocialService socialService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -126,7 +129,15 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setRoles(authorities);
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        /**
+         * 这里修改一下，默认密码先固定
+         */
+        String encryptedPassword;
+        if (user.getRoles().contains(RolesConstants.ADMIN)) {
+            encryptedPassword = passwordEncoder.encode(DEFAULT_ADMIN_PASSWORD);
+        } else {
+            encryptedPassword = passwordEncoder.encode(DEFAULT_PASSWORD);
+        }
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
@@ -202,6 +213,7 @@ public class UserService {
                 String encryptedPassword = passwordEncoder.encode(password);
                 user.setPassword(encryptedPassword);
                 log.debug("Changed password for User: {}", user);
+                userRepository.save(user);
             });
     }
 

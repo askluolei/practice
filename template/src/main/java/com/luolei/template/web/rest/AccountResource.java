@@ -133,12 +133,13 @@ public class AccountResource {
     /**
      * POST  /account/change-password : changes the current user's password
      *
-     * @param password the new password
+     * @param map the new password
      * @throws InvalidPasswordException 400 (Bad Request) if the new password is incorrect
      */
     @PostMapping(path = "/account/change-password")
     @Timed
-    public void changePassword(@RequestBody String password) {
+    public void changePassword(@RequestBody Map<String, String> map) {
+        String password = map.get("password");
         if (!checkPasswordLength(password)) {
             throw new InvalidPasswordException();
         }

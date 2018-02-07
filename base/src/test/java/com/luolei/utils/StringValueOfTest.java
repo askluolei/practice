@@ -21,4 +21,19 @@ public class StringValueOfTest {
         System.out.println(new BigDecimal(17.13).multiply(new BigDecimal(5)).setScale(2, BigDecimal.ROUND_HALF_UP));
         System.out.println(String.valueOf(17.13 * 5));
     }
+
+    @Test
+    public void test2() {
+        StringBuilder sb = new StringBuilder();
+        String s = null;
+        sb.append(s).append("&").append("123");
+        System.out.println(sb.toString());
+    }
+
+    @Test
+    public void test3() {
+        String a = null;
+        a = a + "123";
+        System.out.println(a);
+    }
 }
