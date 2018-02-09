@@ -82,7 +82,8 @@ export const asyncRouterMap = [
       { path: 'logs', component: _import('administration/logs'), name: 'logs', meta: { title: 'logs', noCache: 'true', icon: 'ali_edit' }},
       { path: 'docs', component: _import('administration/docs'), name: 'docs', meta: { title: 'docs', noCache: 'true', icon: 'ali_api' }},
       { path: 'schedule', component: _import('administration/schedule'), name: 'schedule', meta: { title: 'schedule', noCache: 'true', icon: 'ali_schedule' }},
-      { path: 'entity-audit', component: _import('administration/entityAudit'), name: 'entityAudit', meta: { title: 'entityAudit', noCache: 'true', icon: 'ali_history' }}
+      { path: 'entity-audit', component: _import('administration/entityAudit'), name: 'entityAudit', meta: { title: 'entityAudit', noCache: 'true', icon: 'ali_history' }},
+      { path: 'sql', component: _import('administration/sqlTool'), name: 'sql', meta: { title: 'sql', noCache: 'true', icon: 'ali_tools' }}
     ]
   },
   {

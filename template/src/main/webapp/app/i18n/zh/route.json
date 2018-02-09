@@ -57,6 +57,7 @@
     "schedule": "调度",
     "test": "测试",
     "userSetting": "个人设置",
-    "changePassword": "修改密码"
+    "changePassword": "修改密码",
+    "sql": "sql 编辑器"
   }
 }

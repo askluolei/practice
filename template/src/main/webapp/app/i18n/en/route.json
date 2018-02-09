@@ -57,6 +57,7 @@
     "schedule": "schedule",
     "test": "test",
     "userSetting": "userSetting",
-    "changePassword": "changePassword"
+    "changePassword": "changePassword",
+    "sql": "sql Editor"
   }
 }

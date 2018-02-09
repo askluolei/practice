@@ -20,6 +20,10 @@ public class OssConfiguration {
 
     @Bean
     public CloudStorageService cloudStorageService(ApplicationProperties properties) {
+        boolean enableOss = properties.getOss().getEnable();
+        if (!enableOss) {
+            return null;
+        }
         OssType ossType = properties.getOss().getType();
         CloudStorageService cloudStorageService = null;
         if (Objects.nonNull(ossType)) {

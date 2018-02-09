@@ -377,7 +377,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 
@@ -919,5 +918,12 @@
             </dependencies>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
 
 </project>

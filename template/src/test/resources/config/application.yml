@@ -105,13 +105,14 @@ jhipster:
 
 application:
     oss:
+        enable: false
         type: Qiniu
-#        qiniu:
-#            domain:
-#            prefix:
-#            accessKey:
-#            secretKey:
-#            bucketName:
+        qiniu:
+            domain:
+            prefix:
+            accessKey:
+            secretKey:
+            bucketName:
 #        aliyun:
 #            domain:
 #            prefix:

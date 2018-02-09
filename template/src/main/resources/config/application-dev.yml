@@ -141,12 +141,13 @@ jhipster:
 
 application:
     oss:
+        enable: true
         type: Qiniu
         qiniu:
             domain: http://p1evq7qjz.bkt.clouddn.com
             prefix:
-            accessKey:
-            secretKey:
+            accessKey: xEwO-UGMa-SQ3dJ8ht3UJlO7TomW9WMC89IlSXZB
+            secretKey: Fr6l-lcs6m6ZpYrLnq_MFDO_AyVymx3ijMSOarG3
             bucketName: public
         aliyun:
             domain:

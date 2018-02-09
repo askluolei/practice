@@ -1,5 +1,29 @@
 import request from '@/utils/request'
 
+export function latestSavedSql(params) {
+  return request({
+    url: '/api/tools/saved-sql',
+    method: 'get',
+    params
+  })
+}
+
+export function latestExecuteSql(params) {
+  return request({
+    url: '/api/tools/execute-sql',
+    method: 'get',
+    params
+  })
+}
+
+export function executeSql(data) {
+  return request({
+    url: '/api/tools/sql',
+    method: 'post',
+    data
+  })
+}
+
 export function getScheduleTaskLogs(id, params) {
   return request({
     url: '/api/schedule/task-logs/' + id,

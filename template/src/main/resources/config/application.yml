@@ -130,6 +130,7 @@ application:
         workerId: 0
         datacenterId: 0
 #    oss:
+#        enable: true
 #        type: Qiniu
 #        qiniu:
 #            domain:

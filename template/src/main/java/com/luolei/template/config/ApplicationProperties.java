@@ -29,6 +29,11 @@ public class ApplicationProperties {
     @Getter
     @Setter
     public static class Oss {
+
+        /**
+         * 是否开启配置
+         */
+        private Boolean enable;
         /**
          * 选择的配置
          */

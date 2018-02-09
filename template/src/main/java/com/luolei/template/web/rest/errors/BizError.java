@@ -14,7 +14,9 @@ public enum BizError {
     SCHEDULE_ERROR("schedule_error", "调度异常"),
     SCHEDULE_CONFIG_ERROR("schedule_config_error", "调度配置异常"),
     REQUEST_PARAM_CHECK_ERROR("request_param_check_error", "参数检查未通过"),
-    UPLOAD_ERROR("upload_error", "OSS 上传失败")
+    UPLOAD_ERROR("upload_error", "OSS 上传失败"),
+    EXECUTE_SQL_ERROR("execute_sql_error", "执行sql失败"),
+    EXECUTE_SQL_CHECK_ERROR("execute_sql_check_error", "执行sql检查异常")
     ;
     private String code;
     private String msg;

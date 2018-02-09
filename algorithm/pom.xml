@@ -11,5 +11,16 @@
 
     <artifactId>algorithm</artifactId>
 
+    <properties>
+        <hutool.version>4.0.5</hutool.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
