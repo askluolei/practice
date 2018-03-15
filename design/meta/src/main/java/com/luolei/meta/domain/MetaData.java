@@ -1,172 +1,31 @@
 package com.luolei.meta.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import lombok.Data;
 
 /**
- * 数据表
- * 字段数 <= 100 的对象存储的地方
- *
  * @author 罗雷
- * @date 2017/12/28 0028
- * @time 13:37
+ * @date 2018/3/15 0015
+ * @time 9:29
  */
-@Getter
-@Setter
-@EqualsAndHashCode(exclude = {"tenant", "object"})
-@ToString(exclude = {"tenant", "object"})
-@Entity
-@Table(name = "t_meta_data100")
-/**
- * 这里的字段太多，而且大多是空字段，因此需要动态插入,动态更新（不管为null的字段）
- * 动态更新的意思是，只更新改变的字段值，
- * 注意，不是更新非null字段
- */
-@DynamicInsert
-@DynamicUpdate
-public class MetaData100 implements Serializable {
+@Data
+public class MetaData extends AuditDomain {
 
-    /**
-     * 全局唯一的id
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "guid")
-    private Long guid;
+    private Long id;
 
     /**
      * 租户id
      */
-    @ManyToOne
-    @JoinColumn(name = "tenant_id", nullable = false)
-    private Tenant tenant;
+    private Long tenantId;
 
     /**
      * 对象id
      */
-    @ManyToOne
-    @JoinColumn(name = "object_id", nullable = false)
-    private MetaObject object;
+    private Long objectId;
 
     /**
-     * 对象名
+     * 数据名
      */
-    @Column(name = "object_name")
     private String name;
-
-    public void setValue(int num, String value) {
-        switch(num) {
-            case 0 : setValue0(value);break;
-            case 1 : setValue1(value);break;
-            case 2 : setValue2(value);break;
-            case 3 : setValue3(value);break;
-            case 4 : setValue4(value);break;
-            case 5 : setValue5(value);break;
-            case 6 : setValue6(value);break;
-            case 7 : setValue7(value);break;
-            case 8 : setValue8(value);break;
-            case 9 : setValue9(value);break;
-            case 10 : setValue10(value);break;
-            case 11 : setValue11(value);break;
-            case 12 : setValue12(value);break;
-            case 13 : setValue13(value);break;
-            case 14 : setValue14(value);break;
-            case 15 : setValue15(value);break;
-            case 16 : setValue16(value);break;
-            case 17 : setValue17(value);break;
-            case 18 : setValue18(value);break;
-            case 19 : setValue19(value);break;
-            case 20 : setValue20(value);break;
-            case 21 : setValue21(value);break;
-            case 22 : setValue22(value);break;
-            case 23 : setValue23(value);break;
-            case 24 : setValue24(value);break;
-            case 25 : setValue25(value);break;
-            case 26 : setValue26(value);break;
-            case 27 : setValue27(value);break;
-            case 28 : setValue28(value);break;
-            case 29 : setValue29(value);break;
-            case 30 : setValue30(value);break;
-            case 31 : setValue31(value);break;
-            case 32 : setValue32(value);break;
-            case 33 : setValue33(value);break;
-            case 34 : setValue34(value);break;
-            case 35 : setValue35(value);break;
-            case 36 : setValue36(value);break;
-            case 37 : setValue37(value);break;
-            case 38 : setValue38(value);break;
-            case 39 : setValue39(value);break;
-            case 40 : setValue40(value);break;
-            case 41 : setValue41(value);break;
-            case 42 : setValue42(value);break;
-            case 43 : setValue43(value);break;
-            case 44 : setValue44(value);break;
-            case 45 : setValue45(value);break;
-            case 46 : setValue46(value);break;
-            case 47 : setValue47(value);break;
-            case 48 : setValue48(value);break;
-            case 49 : setValue49(value);break;
-            case 50 : setValue50(value);break;
-            case 51 : setValue51(value);break;
-            case 52 : setValue52(value);break;
-            case 53 : setValue53(value);break;
-            case 54 : setValue54(value);break;
-            case 55 : setValue55(value);break;
-            case 56 : setValue56(value);break;
-            case 57 : setValue57(value);break;
-            case 58 : setValue58(value);break;
-            case 59 : setValue59(value);break;
-            case 60 : setValue60(value);break;
-            case 61 : setValue61(value);break;
-            case 62 : setValue62(value);break;
-            case 63 : setValue63(value);break;
-            case 64 : setValue64(value);break;
-            case 65 : setValue65(value);break;
-            case 66 : setValue66(value);break;
-            case 67 : setValue67(value);break;
-            case 68 : setValue68(value);break;
-            case 69 : setValue69(value);break;
-            case 70 : setValue70(value);break;
-            case 71 : setValue71(value);break;
-            case 72 : setValue72(value);break;
-            case 73 : setValue73(value);break;
-            case 74 : setValue74(value);break;
-            case 75 : setValue75(value);break;
-            case 76 : setValue76(value);break;
-            case 77 : setValue77(value);break;
-            case 78 : setValue78(value);break;
-            case 79 : setValue79(value);break;
-            case 80 : setValue80(value);break;
-            case 81 : setValue81(value);break;
-            case 82 : setValue82(value);break;
-            case 83 : setValue83(value);break;
-            case 84 : setValue84(value);break;
-            case 85 : setValue85(value);break;
-            case 86 : setValue86(value);break;
-            case 87 : setValue87(value);break;
-            case 88 : setValue88(value);break;
-            case 89 : setValue89(value);break;
-            case 90 : setValue90(value);break;
-            case 91 : setValue91(value);break;
-            case 92 : setValue92(value);break;
-            case 93 : setValue93(value);break;
-            case 94 : setValue94(value);break;
-            case 95 : setValue95(value);break;
-            case 96 : setValue96(value);break;
-            case 97 : setValue97(value);break;
-            case 98 : setValue98(value);break;
-            case 99 : setValue99(value);break;
-            case 100 : setValue100(value);break;
-            default: throw new IllegalArgumentException("invalid index num:" + num);
-        }
-    }
 
     public String getValue(int num) {
         switch(num) {
@@ -275,6 +134,114 @@ public class MetaData100 implements Serializable {
         }
     }
 
+    public void setValue(int num, String value) {
+        switch(num) {
+            case 0 : setValue0(value);break;
+            case 1 : setValue1(value);break;
+            case 2 : setValue2(value);break;
+            case 3 : setValue3(value);break;
+            case 4 : setValue4(value);break;
+            case 5 : setValue5(value);break;
+            case 6 : setValue6(value);break;
+            case 7 : setValue7(value);break;
+            case 8 : setValue8(value);break;
+            case 9 : setValue9(value);break;
+            case 10 : setValue10(value);break;
+            case 11 : setValue11(value);break;
+            case 12 : setValue12(value);break;
+            case 13 : setValue13(value);break;
+            case 14 : setValue14(value);break;
+            case 15 : setValue15(value);break;
+            case 16 : setValue16(value);break;
+            case 17 : setValue17(value);break;
+            case 18 : setValue18(value);break;
+            case 19 : setValue19(value);break;
+            case 20 : setValue20(value);break;
+            case 21 : setValue21(value);break;
+            case 22 : setValue22(value);break;
+            case 23 : setValue23(value);break;
+            case 24 : setValue24(value);break;
+            case 25 : setValue25(value);break;
+            case 26 : setValue26(value);break;
+            case 27 : setValue27(value);break;
+            case 28 : setValue28(value);break;
+            case 29 : setValue29(value);break;
+            case 30 : setValue30(value);break;
+            case 31 : setValue31(value);break;
+            case 32 : setValue32(value);break;
+            case 33 : setValue33(value);break;
+            case 34 : setValue34(value);break;
+            case 35 : setValue35(value);break;
+            case 36 : setValue36(value);break;
+            case 37 : setValue37(value);break;
+            case 38 : setValue38(value);break;
+            case 39 : setValue39(value);break;
+            case 40 : setValue40(value);break;
+            case 41 : setValue41(value);break;
+            case 42 : setValue42(value);break;
+            case 43 : setValue43(value);break;
+            case 44 : setValue44(value);break;
+            case 45 : setValue45(value);break;
+            case 46 : setValue46(value);break;
+            case 47 : setValue47(value);break;
+            case 48 : setValue48(value);break;
+            case 49 : setValue49(value);break;
+            case 50 : setValue50(value);break;
+            case 51 : setValue51(value);break;
+            case 52 : setValue52(value);break;
+            case 53 : setValue53(value);break;
+            case 54 : setValue54(value);break;
+            case 55 : setValue55(value);break;
+            case 56 : setValue56(value);break;
+            case 57 : setValue57(value);break;
+            case 58 : setValue58(value);break;
+            case 59 : setValue59(value);break;
+            case 60 : setValue60(value);break;
+            case 61 : setValue61(value);break;
+            case 62 : setValue62(value);break;
+            case 63 : setValue63(value);break;
+            case 64 : setValue64(value);break;
+            case 65 : setValue65(value);break;
+            case 66 : setValue66(value);break;
+            case 67 : setValue67(value);break;
+            case 68 : setValue68(value);break;
+            case 69 : setValue69(value);break;
+            case 70 : setValue70(value);break;
+            case 71 : setValue71(value);break;
+            case 72 : setValue72(value);break;
+            case 73 : setValue73(value);break;
+            case 74 : setValue74(value);break;
+            case 75 : setValue75(value);break;
+            case 76 : setValue76(value);break;
+            case 77 : setValue77(value);break;
+            case 78 : setValue78(value);break;
+            case 79 : setValue79(value);break;
+            case 80 : setValue80(value);break;
+            case 81 : setValue81(value);break;
+            case 82 : setValue82(value);break;
+            case 83 : setValue83(value);break;
+            case 84 : setValue84(value);break;
+            case 85 : setValue85(value);break;
+            case 86 : setValue86(value);break;
+            case 87 : setValue87(value);break;
+            case 88 : setValue88(value);break;
+            case 89 : setValue89(value);break;
+            case 90 : setValue90(value);break;
+            case 91 : setValue91(value);break;
+            case 92 : setValue92(value);break;
+            case 93 : setValue93(value);break;
+            case 94 : setValue94(value);break;
+            case 95 : setValue95(value);break;
+            case 96 : setValue96(value);break;
+            case 97 : setValue97(value);break;
+            case 98 : setValue98(value);break;
+            case 99 : setValue99(value);break;
+            case 100 : setValue100(value);break;
+            default: throw new IllegalArgumentException("invalid index num:" + num);
+        }
+    }
+
+    // 一下是value字段
     private String value0;
     private String value1;
     private String value2;

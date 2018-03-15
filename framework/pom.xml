@@ -17,6 +17,7 @@
         <module>ignite</module>
         <module>dubbo</module>
         <module>netty</module>
+        <module>fabric</module>
     </modules>
 
 

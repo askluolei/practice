@@ -43,3 +43,11 @@
 
 以上就是一个用户购物可能触发的逻辑
 这样就可以稍微模拟正式环境可能出现的压力情况，而不仅仅是单纯的多线程发送请求来压测   
+
+[参考文档](https://gatling.io/docs/current/general/scenario#scenario)   
+
+#### session    
+每个虚拟用户被session支持，session中是具体的数据，在请求过程中可以通过占位符使用，注入，存储数据     
+[参考文档](https://gatling.io/docs/current/session/session_api/#session)    
+
+#### 
