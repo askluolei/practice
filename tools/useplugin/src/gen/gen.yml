@@ -1,0 +1,23 @@
+settings:
+  vm: true
+
+# 实体
+entities:
+  - name: Region
+    fields:
+      - name: regionName
+        type: String
+
+  - name: Country
+    fields:
+      - name: countryName
+        type: String
+
+  - name: Location
+    fields:
+      - name: streetAddress
+        type: String
+
+      - name: postalCode
+        type: String
+

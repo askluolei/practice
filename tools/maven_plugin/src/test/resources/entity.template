@@ -1,0 +1,15 @@
+package #(entity.packageName == null ? settings.packageName : entity.packageName)
+
+import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+
+@Data
+public class #(entity.name) {
+#for(field : entity.fields)
+    private #(field.type) #(field.name);
+#end
+}

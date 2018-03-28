@@ -1,0 +1,25 @@
+settings:
+  vm: true
+  packageName: com.luolei.template
+
+# 实体
+entities:
+  - name: Region
+    fields:
+      - name: regionName
+        type: String
+
+  - name: Country
+    packageName: com.luolei.test
+    fields:
+      - name: countryName
+        type: String
+
+  - name: Location
+    fields:
+      - name: streetAddress
+        type: String
+
+      - name: postalCode
+        type: String
+
